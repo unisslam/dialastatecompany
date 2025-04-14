@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Diyala State Company - Performance Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="navbar">
+    <div class="container">
+      <div class="navbar-brand">
+        <a href="#" class="logo">
+          <img src="img/logo.png" alt="Diyala State Company">
+        </a>
+        <button class="mobile-menu-btn" aria-label="Menu" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+      
+      <div class="navbar-collapse">
+        <nav>
+          <ul class="navbar-nav">
+            <li class="nav-item"><a href="#home" class="nav-link active">Home</a></li>
+            <li class="nav-item"><a href="#about" class="nav-link">About</a></li>
+            <li class="nav-item dropdown">
+              <a href="#performance" class="nav-link dropdown-toggle">Performance</a>
+              <ul class="dropdown-menu">
+                <li><a href="#performance-overview" class="dropdown-item">Overview</a></li>
+                <li><a href="#performance-charts" class="dropdown-item">Charts</a></li>
+              </ul>
+            </li>
+            <li class="nav-item"><a href="#team" class="nav-link">Team</a></li>
+            <li class="nav-item"><a href="#contact" class="nav-link">Contact</a></li>
+          </ul>
+        </nav>
+        
+        <div class="lang-switch">
+          <button onclick="switchLang('ar')"><i class="fas fa-globe-africa"></i> عربي</button>
+          <button onclick="switchLang('en')"><i class="fas fa-globe-americas"></i> English</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="home" class="intro">
+      <div class="overlay"></div>
+      <div class="content-wrapper">
+        <h1 data-en="Diyala State Company Performance Dashboard">لوحة أداء شركة ديالى العامة</h1>
+        <p data-en="Based on the European Foundation for Quality Management (EFQM) excellence model.">
+          استناداً إلى نموذج التميز المؤسسي الأوروبي (EFQM).
+        </p>
+        <div class="cta-buttons">
+          <a href="#performance" class="btn-primary">استعراض البيانات</a>
+          <a href="#contact" class="btn-secondary">اتصل بنا</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="about">
+      <div class="section-header">
+        <h2 data-en="About Diyala Company">عن شركة ديالى</h2>
+        <div class="underline"></div>
+      </div>
+      
+      <!-- منتجات الشركة -->
+      <div class="products-section">
+        <h3 data-en="Company Products">المنتجات المقدمة من قبل الشركة</h3>
+        
+        <div class="product-cards-container">
+          <!-- محولات التوزيع -->
+          <div class="product-card" data-product="transformers-distribution">
+            <div class="product-card-header">
+              <i class="fas fa-bolt"></i>
+              <h4>محولات التوزيع</h4>
+              <i class="fas fa-chevron-down toggle-icon"></i>
+            </div>
+            <div class="product-card-content">
+              <div class="sub-node">سعة 11/0.4 ك.ف قدرة 50 ك.ف.أ</div>
+              <div class="sub-node">سعة 11/0.4 ك.ف قدرة 100 ك.ف.أ</div>
+              <div class="sub-node">سعة 11/0.4 ك.ف قدرة 250 ك.ف.أ</div>
+              <div class="sub-node">سعة 11/0.4 ك.ف قدرة 400 ك.ف.أ</div>
+              <div class="sub-node">سعة 11/0.4 ك.ف قدرة 630 ك.ف.أ</div>
+              <div class="sub-node">سعة 11/0.4 ك.ف قدرة 1000 ك.ف.أ</div>
+              <div class="sub-node">سعة 33/0.4 ك.ف قدرة 100 ك.ف.أ</div>
+              <div class="sub-node">سعة 33/0.4 ك.ف قدرة 250 ك.ف.أ</div>
+              <div class="sub-node">سعة 33/0.4 ك.ف قدرة 400 ك.ف.أ</div>
+              <div class="sub-node">سعة 33/0.4 ك.ف قدرة 630 ك.ف.أ</div>
+              <div class="sub-node">سعة 33/0.4 ك.ف قدرة 1000 ك.ف.أ</div>
+            </div>
+          </div>
+          
+          <!-- محولات القدرة -->
+          <div class="product-card" data-product="transformers-power">
+            <div class="product-card-header">
+              <i class="fas fa-plug"></i>
+              <h4>محولات القدرة</h4>
+              <i class="fas fa-chevron-down toggle-icon"></i>
+            </div>
+            <div class="product-card-content">
+              <div class="sub-node">سعة 33/11 ك.ف قدرة 5 م.ف.أ</div>
+              <div class="sub-node">سعة 33/11 ك.ف قدرة 10 م.ف.أ</div>
+              <div class="sub-node">سعة 33/11 ك.ف قدرة 16 م.ف.أ</div>
+              <div class="sub-node">سعة 33/11 ك.ف قدرة 31.5 م.ف.أ</div>
+              <div class="sub-node">سعة 132/33/11 ك.ف قدرة 63 م.ف.أ</div>
+              <div class="sub-node">سعة 132/33/11 ك.ف قدرة 31.5 م.ف.أ</div>
+            </div>
+          </div>
+          
+          <!-- المقاييس الكهربائية -->
+          <div class="product-card" data-product="meters">
+            <div class="product-card-header">
+              <i class="fas fa-tachometer-alt"></i>
+              <h4>المقاييس الكهربائية</h4>
+              <i class="fas fa-chevron-down toggle-icon"></i>
+            </div>
+            <div class="product-card-content">
+              <div class="sub-node">مقاييس ذات وجه واحد</div>
+              <div class="sub-node">مقاييس ذات ثلاثة اوجه</div>
+              <div class="sub-node">مقاييس الكترونية</div>
+              <div class="sub-node">مقاييس ميكانيكية</div>
+              <div class="sub-node">مقاييس ذكية</div>
+            </div>
+          </div>
+          
+          <!-- القابلوات الضوئية -->
+          <div class="product-card" data-product="fiber">
+            <div class="product-card-header">
+              <i class="fas fa-network-wired"></i>
+              <h4>القابلوات الضوئية</h4>
+              <i class="fas fa-chevron-down toggle-icon"></i>
+            </div>
+            <div class="product-card-content">
+              <div class="sub-node">قابلوات ضوئية هوائية</div>
+              <div class="sub-node">قابلوات ضوئية ارضية</div>
+              <div class="sub-node">قابلوات احادية النمط</div>
+              <div class="sub-node">قابلوات متعددة النمط</div>
+            </div>
+          </div>
+          
+          <!-- المكواة -->
+          <div class="product-card" data-product="irons">
+            <div class="product-card-header">
+              <i class="fas"></i>
+              <h4>المكواة</h4>
+              <i class="fas fa-chevron-down toggle-icon"></i>
+            </div>
+            <div class="product-card-content">
+              <div class="sub-node">المكواة بخارية</div>
+              <div class="sub-node">المكواة جافة</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Products Gallery -->
+        <div class="products-gallery">
+          <div class="gallery-item" data-product="transformers-distribution">
+            <div class="product-icon">
+              <i class="fas fa-bolt"></i>
+            </div>
+            <h4>محولات التوزيع</h4>
+          </div>
+          <div class="gallery-item" data-product="transformers-power">
+            <div class="product-icon">
+              <i class="fas fa-plug"></i>
+            </div>
+            <h4>محولات القدرة</h4>
+          </div>
+          <div class="gallery-item" data-product="meters">
+            <div class="product-icon">
+              <i class="fas fa-tachometer-alt"></i>
+            </div>
+            <h4>المقاييس الكهربائية</h4>
+          </div>
+          <div class="gallery-item" data-product="fiber">
+            <div class="product-icon">
+              <i class="fas fa-network-wired"></i>
+            </div>
+            <h4>القابلوات الضوئية</h4>
+          </div>
+          <div class="gallery-item" data-product="irons">
+            <div class="product-icon">
+              <i class="fas"></i>
+            </div>
+            <h4>المكواة</h4>
+          </div>
+        </div>
+      </div>
+      
+      <div class="about-content">
+        <div class="about-text">
+          <p data-en="Diyala State Company is one of the leading industrial companies in Iraq, specializing in manufacturing electrical equipment and contributing significantly to the country's infrastructure development.">
+            شركة ديالى العامة هي إحدى الشركات الصناعية الرائدة في العراق، متخصصة في تصنيع المعدات الكهربائية وتساهم بشكل كبير في تطوير البنية التحتية للبلاد.
+          </p>
+          <div class="stats-container">
+            <div class="stat-item">
+              <i class="fas fa-users"></i>
+              <h3>400+</h3>
+              <p>موظف</p>
+            </div>
+            <div class="stat-item">
+              <i class="fas fa-industry"></i>
+              <h3>1964</h3>
+              <p>تأسست عام</p>
+            </div>
+            <div class="stat-item">
+              <i class="fas fa-bolt"></i>
+              <h3>150+</h3>
+              <p>مليار دينار مبيعات</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="performance" class="charts">
+      <div class="section-header">
+        <h2 data-en="Performance Analysis">تحليل الأداء</h2>
+        <div class="underline"></div>
+      </div>
+      
+      <!-- المستفيدون والمعنيّون للشركة -->
+      <div class="beneficiaries-section">
+        <h3 data-en="Company Beneficiaries and Stakeholders">المستفيدون والمعنيّون للشركة</h3>
+        <p class="section-subtitle">المستفيدون والمعنيون الحاليون هم كما يلي:</p>
+        
+        <div class="table-responsive">
+          <table class="stats-table beneficiaries-table">
+            <thead>
+              <tr>
+                <th>شركاء القطاع العام</th>
+                <th>الموردين الخارجين والمنظمات و النقابات المتخصصة</th>
+                <th>الشركاء الدوليين</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>وزارة الكهرباء</td>
+                <td>الموردين الخارجين</td>
+                <td>شركة KIGG البريطانية</td>
+              </tr>
+              <tr>
+                <td>وزارة الاتصالات</td>
+                <td>المكاتب الاستشارية والتدريب</td>
+                <td rowspan="2">شركة المنطقة الذكية وحي المعرفة من<br/>WUHAN VIBERHOME INTERNATIONAL<br/>TEGNOLOGE COMPANY</td>
+              </tr>
+              <tr>
+                <td>وزارة التعليم العالي</td>
+                <td>جهات منح الشهادات الداخلية والدولية</td>
+              </tr>
+              <tr>
+                <td>الوزارات الأخرى</td>
+                <td>اتحاد الصناعات العراقي</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td>نقابة المهندسين</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td>خطوط النقل الخاص لموظفي الشركة</td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+        <!-- مخطط المستفيدون والمعنيّون -->
+        <div class="beneficiaries-chart-container">
+          <h4>مخطط تمثيلي للمستفيدين والمعنيّين</h4>
+          <div class="chart-wrapper">
+            <canvas id="beneficiariesChart"></canvas>
+          </div>
+        </div>
+      </div>
+      
+      <div class="chart-selector">
+        <button class="active" data-chart="sales">المبيعات</button>
+        <button data-chart="production">الإنتاج</button>
+        <button data-chart="customers">العملاء</button>
+      </div>
+      <div class="chart-grid">
+        <div class="chart-container active" id="sales-container">
+          <h3>مبيعات الشركة (بالمليار دينار)</h3>
+          <canvas id="salesChart"></canvas>
+        </div>
+        <div class="chart-container" id="production-container">
+          <h3>الإنتاج السنوي</h3>
+          <canvas id="productionChart"></canvas>
+        </div>
+        <div class="chart-container" id="customers-container">
+          <h3>توزيع العملاء</h3>
+          <canvas id="customerChart"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <section id="team" class="team">
+      <div class="section-header">
+        <h2 data-en="Our Team">فريق العمل</h2>
+        <div class="underline"></div>
+      </div>
+      
+      <!-- فريق عمل تقييم الاداء المؤسسي -->
+      <div class="evaluation-team">
+        <h3 data-en="Institutional Performance Evaluation Team">فريق عمل تقييم الاداء المؤسسي</h3>
+        <div class="team-members">
+          <table class="team-table">
+            <thead>
+              <tr>
+                <th>الاسم</th>
+                <th>المنصب</th>
+                <th>الصفة</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>عبد الستار مخلف عليوي</td>
+                <td>مديرعام الشركة</td>
+                <td>رئيس الفريق</td>
+              </tr>
+              <tr>
+                <td>ازدهار مصطفى عباس</td>
+                <td>مدير قسم التخطيط</td>
+                <td>عضو</td>
+              </tr>
+              <tr>
+                <td>فردوس قاسم جاسم</td>
+                <td>مدير قسم ادارة الجودة</td>
+                <td>عضو</td>
+              </tr>
+              <tr>
+                <td>خالد عبد الصاحب مبارك</td>
+                <td>مدير قسم الرقابة الداخلية</td>
+                <td>عضو</td>
+              </tr>
+              <tr>
+                <td>احمد عطية فرحان</td>
+                <td>مدير قسم الموارد البشرية</td>
+                <td>عضو</td>
+              </tr>
+              <tr>
+                <td>علي محمد عيسى</td>
+                <td>مدير قسم الاعلام والعلاقات</td>
+                <td>عضو</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      
+      <!-- نوع القوى العاملة من حيث المؤهلات والأعمار -->
+      <h3 data-en="Workforce by Qualifications and Ages">جدول يوضح نوع القوى العاملة من حيث المؤهلات والأعمار</h3>
+      <div class="table-responsive">
+        <table class="stats-table qualification-table">
+          <thead>
+            <tr>
+              <th>المؤهلات</th>
+              <th>21-30</th>
+              <th>31-40</th>
+              <th>41-50</th>
+              <th>51-60</th>
+              <th>أكثر من 60</th>
+              <th>المجموع</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>ماجستير</td>
+              <td>0</td>
+              <td>2</td>
+              <td>8</td>
+              <td>3</td>
+              <td>0</td>
+              <td>13</td>
+            </tr>
+            <tr>
+              <td>دبلوم عالي</td>
+              <td>0</td>
+              <td>0</td>
+              <td>6</td>
+              <td>0</td>
+              <td>0</td>
+              <td>6</td>
+            </tr>
+            <tr>
+              <td>بكالوريوس</td>
+              <td>16</td>
+              <td>55</td>
+              <td>122</td>
+              <td>109</td>
+              <td>4</td>
+              <td>306</td>
+            </tr>
+            <tr>
+              <td>دبلوم فني</td>
+              <td>6</td>
+              <td>19</td>
+              <td>64</td>
+              <td>99</td>
+              <td>5</td>
+              <td>193</td>
+            </tr>
+            <tr>
+              <td>اعدادية</td>
+              <td>7</td>
+              <td>17</td>
+              <td>377</td>
+              <td>601</td>
+              <td>15</td>
+              <td>1017</td>
+            </tr>
+            <tr>
+              <td>متوسطة</td>
+              <td>1</td>
+              <td>4</td>
+              <td>12</td>
+              <td>37</td>
+              <td>3</td>
+              <td>57</td>
+            </tr>
+            <tr>
+              <td>ابتدائية</td>
+              <td>5</td>
+              <td>24</td>
+              <td>80</td>
+              <td>121</td>
+              <td>13</td>
+              <td>243</td>
+            </tr>
+            <tr>
+              <td>يقرأ ويكتب</td>
+              <td>0</td>
+              <td>2</td>
+              <td>8</td>
+              <td>2</td>
+              <td>0</td>
+              <td>12</td>
+            </tr>
+            <tr class="table-total">
+              <td>المجموع</td>
+              <td>35</td>
+              <td>123</td>
+              <td>677</td>
+              <td>972</td>
+              <td>40</td>
+              <td>1847</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <!-- مخططات تحليل القوى العاملة -->
+      <div class="workforce-charts">
+        <h4 data-en="Workforce Analysis Charts">مخططات تحليل القوى العاملة</h4>
+        <div class="charts-row">
+          <div class="chart-card">
+            <h5>توزيع القوى العاملة حسب المؤهلات</h5>
+            <div class="chart-wrapper">
+              <canvas id="qualificationsChart"></canvas>
+            </div>
+          </div>
+          <div class="chart-card">
+            <h5>توزيع القوى العاملة حسب الفئات العمرية</h5>
+            <div class="chart-wrapper">
+              <canvas id="ageGroupsChart"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="charts-row">
+          <div class="chart-card">
+            <h5>توزيع القوى العاملة حسب المؤهلات والفئات العمرية</h5>
+            <div class="chart-wrapper">
+              <canvas id="qualificationsByAgeChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- اعداد موظفي الشركة وتصنيفهم -->
+      <h3 data-en="Company Employees Statistics">اعداد موظفي الشركة وتصنيفهم حسب الدرجات الوظيفية لعام 2024</h3>
+      <div class="table-responsive">
+        <table class="stats-table">
+          <thead>
+            <tr>
+              <th>العــــدد الكلي</th>
+              <th>الوزير</th>
+              <th>درجة عليا أ</th>
+              <th>درجة عليا ب</th>
+              <th>الدرجة الأولى</th>
+              <th>الدرجة الثانية</th>
+              <th>الدرجة الثالثة</th>
+              <th>الدرجة الرابعة</th>
+              <th>الدرجة الخامسة</th>
+              <th>الدرجة السادسة</th>
+              <th>الدرجة السابعة</th>
+              <th>الدرجة الثامنة</th>
+              <th>الدرجة التاسعة</th>
+              <th>الدرجة العاشرة</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1783</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>2</td>
+              <td>182</td>
+              <td>949</td>
+              <td>193</td>
+              <td>312</td>
+              <td>65</td>
+              <td>50</td>
+              <td>26</td>
+              <td>2</td>
+              <td>2</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <!-- مخططات توزيع الموظفين حسب الدرجات الوظيفية -->
+      <div class="workforce-charts">
+        <h4 data-en="Employee Classifications Charts">مخططات توزيع الموظفين حسب الدرجات الوظيفية</h4>
+        <div class="charts-row">
+          <div class="chart-card full-width">
+            <h5>توزيع الموظفين حسب الدرجات الوظيفية</h5>
+            <div class="chart-wrapper">
+              <canvas id="employeeGradesChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="team-stats">
+        <div class="team-category">
+          <div class="icon-circle">
+            <i class="fas fa-hard-hat"></i>
+          </div>
+          <h3 data-en="Engineers">المهندسين</h3>
+          <div class="progress-container">
+            <div class="progress-bar" data-value="120"></div>
+          </div>
+          <p>120</p>
+        </div>
+        <div class="team-category">
+          <div class="icon-circle">
+            <i class="fas fa-wrench"></i>
+          </div>
+          <h3 data-en="Technicians">الفنيين</h3>
+          <div class="progress-container">
+            <div class="progress-bar" data-value="200"></div>
+          </div>
+          <p>200</p>
+        </div>
+        <div class="team-category">
+          <div class="icon-circle">
+            <i class="fas fa-user-tie"></i>
+          </div>
+          <h3 data-en="Administration">الإداريين</h3>
+          <div class="progress-container">
+            <div class="progress-bar" data-value="80"></div>
+          </div>
+          <p>80</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="contact">
+      <div class="section-header">
+        <h2 data-en="Contact Us">اتصل بنا</h2>
+        <div class="underline"></div>
+      </div>
+      <div class="contact-container">
+        <div class="contact-info">
+          <div class="contact-item">
+            <i class="fas fa-globe"></i>
+            <p data-en="Website: diala.industry.gov.iq">
+              الموقع الإلكتروني: <a href="https://diala.industry.gov.iq" target="_blank">diala.industry.gov.iq</a>
+            </p>
+          </div>
+          <div class="contact-item">
+            <i class="fas fa-phone-alt"></i>
+            <p data-en="Phone: +964 781 123 4567">
+              الهاتف: <a href="tel:+9647811234567">+964 781 123 4567</a>
+            </p>
+          </div>
+          <div class="contact-item">
+            <i class="fas fa-envelope"></i>
+            <p>
+              Email: <a href="mailto:diala.comp@industry.gov.iq">diala.comp@industry.gov.iq</a>
+            </p>
+          </div>
+          <div class="contact-item">
+            <i class="fas fa-map-marker-alt"></i>
+            <p data-en="Address: Diyala, Iraq">
+              العنوان: ديالى، العراق
+            </p>
+          </div>
+        </div>
+        <div class="contact-form">
+          <h3 data-en="Send us a message">أرسل لنا رسالة</h3>
+          <form id="contactForm">
+            <div class="form-group">
+              <input type="text" id="name" placeholder="الاسم الكامل" required>
+            </div>
+            <div class="form-group">
+              <input type="email" id="email" placeholder="البريد الإلكتروني" required>
+            </div>
+            <div class="form-group">
+              <input type="text" id="subject" placeholder="الموضوع">
+            </div>
+            <div class="form-group">
+              <textarea id="message" placeholder="الرسالة" required></textarea>
+            </div>
+            <button type="submit" class="submit-btn">إرسال</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services Location Section -->
+    <section class="services-location-section">
+      <div class="container">
+        <div class="section-title-container">
+          <h2 class="section-title" data-ar="خدمات الشركة ومواقعها">Company Services and Locations</h2>
+          <p class="section-subtitle" data-ar="تقدم شركة ديالى العامة خدماتها من خلال مواقع مختلفة في محافظة ديالى، اطلع على الخدمات المتوفرة ومعلومات الاتصال لكل موقع.">Diyala State Company provides its services through various locations in Diyala Governorate. Learn about the available services and contact information for each location.</p>
+        </div>
+        
+        <div class="scrollable-cards-container">
+          <div class="scrollable-cards">
+            <!-- Main Headquarters Card -->
+            <div class="info-card">
+              <div class="card-header">
+                <div class="card-icon"><i class="fas fa-building"></i></div>
+                <h3 data-ar="المقر الرئيسي">Main Headquarters</h3>
+              </div>
+              <div class="card-content">
+                <p data-ar="يقع المقر الرئيسي للشركة في المدخل الرئيسي لمركز محافظة ديالى قرب تقاطع القدس المؤدي الى كافة اقضية ونواحي المحافظة وعلى الطريق الدولي الذي يربط محافظة ديالى بالعاصمة بغداد.">The company's headquarters is located at the main entrance to Diyala Governorate center, near Al-Quds intersection leading to all districts of the governorate and on the international road connecting Diyala Governorate with the capital, Baghdad.</p>
+                <ul class="contact-list">
+                  <li><i class="fas fa-phone"></i> Phone: +964 781 123 4567</li>
+                  <li><i class="fas fa-envelope"></i> Email: info@diala.industry.gov.iq</li>
+                  <li><i class="fas fa-clock"></i> Working Hours: Sunday - Thursday, 8:00 AM - 3:00 PM</li>
+                </ul>
+                <div class="location-map">
+                  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3296.057703760445!2d44.63127707531963!3d33.44970997413861!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x155786623600f723%3A0x5589351ab39b4f39!2sDiyala%20State%20Company!5e0!3m2!1sen!2siq!4v1684247020380!5m2!1sen!2siq" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Training Center Card -->
+            <div class="info-card">
+              <div class="card-header">
+                <div class="card-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+                <h3 data-ar="مركز التدريب المهني">Vocational Training Center</h3>
+              </div>
+              <div class="card-content">
+                <p data-ar="يقدم مركز التدريب المهني في شركة ديالى خدمات تدريبية متخصصة في مجالات الصناعات الكهربائية والإلكترونية، ويستقبل المتدربين من موظفي الشركة والجهات الخارجية.">The vocational training center at Diyala Company provides specialized training services in electrical and electronic industries, and receives trainees from company employees and external entities.</p>
+                <p data-ar="الخدمات المقدمة:">Services Provided:</p>
+                <ol>
+                  <li data-ar="دورات تدريبية في مجال الصناعات الكهربائية">Training courses in electrical industries</li>
+                  <li data-ar="دورات صيانة المحولات والمقاييس">Transformer and meter maintenance courses</li>
+                  <li data-ar="دورات السلامة المهنية">Occupational safety courses</li>
+                  <li data-ar="دورات تطوير المهارات الإدارية والفنية">Administrative and technical skills development courses</li>
+                </ol>
+              </div>
+            </div>
+            
+            <!-- Research and Development Unit Card -->
+            <div class="info-card">
+              <div class="card-header">
+                <div class="card-icon"><i class="fas fa-flask"></i></div>
+                <h3 data-ar="وحدة البحث والتطوير">Research and Development Unit</h3>
+              </div>
+              <div class="card-content">
+                <p data-ar="تعمل وحدة البحث والتطوير على تطوير المنتجات الحالية وابتكار منتجات جديدة تلبي احتياجات السوق المحلية، مع التركيز على الاستدامة وكفاءة الطاقة.">The Research and Development Unit works on developing existing products and creating new products that meet the needs of the local market, with a focus on sustainability and energy efficiency.</p>
+                <p data-ar="مجالات العمل:">Areas of Work:</p>
+                <ul>
+                  <li data-ar="تطوير وتحسين المنتجات الحالية">Development and improvement of existing products</li>
+                  <li data-ar="اختبار المواد والمنتجات">Testing materials and products</li>
+                  <li data-ar="التعاون مع الجامعات ومراكز البحوث">Collaboration with universities and research centers</li>
+                  <li data-ar="دراسات الجدوى للمنتجات الجديدة">Feasibility studies for new products</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          
+          <div class="scroll-controls">
+            <button class="prev-btn"><i class="fas fa-chevron-left"></i></button>
+            <div class="scroll-indicators"></div>
+            <button class="next-btn"><i class="fas fa-chevron-right"></i></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Direct Sales Centers Section -->
+    <section class="direct-sales-section">
+      <div class="container">
+        <div class="section-title-container">
+          <h2 class="section-title" data-ar="مراكز البيع المباشر">Direct Sales Centers</h2>
+          <p class="section-subtitle" data-ar="خدمة مباشرة للمواطنين بإجراءات مبسطة">Direct Service to Citizens with Simplified Procedures</p>
+        </div>
+        
+        <div class="sales-center-card">
+          <div class="card-header">
+            <div class="card-icon"><i class="fas fa-store"></i></div>
+            <h3 data-ar="منفذ البيع المباشر">Direct Sales Outlet</h3>
+          </div>
+          <div class="card-content">
+            <p data-ar="تم افتتاح منفذ تسويقي للبيع المباشر في مدخل الشركة لتسهيل عملية البيع للمواطنين دون الحاجة إلى الحصول على موافقات للدخول والإجراءات الروتينية التي كانت تصعب عملية الشراء.">A direct sales outlet has been opened at the company's entrance to facilitate the sales process for citizens without the need to obtain entry approvals and routine procedures that used to complicate the purchasing process.</p>
+            <div class="features-list">
+              <div class="feature">
+                <i class="fas fa-check-circle"></i>
+                <span data-ar="إجراءات بيع سريعة ومبسطة">Fast and simplified sales procedures</span>
+              </div>
+              <div class="feature">
+                <i class="fas fa-check-circle"></i>
+                <span data-ar="أسعار تنافسية ومناسبة">Competitive and affordable prices</span>
+              </div>
+              <div class="feature">
+                <i class="fas fa-check-circle"></i>
+                <span data-ar="جودة منتجات مضمونة">Guaranteed product quality</span>
+              </div>
+              <div class="feature">
+                <i class="fas fa-clock"></i>
+                <span data-ar="أوقات العمل: من الأحد إلى الخميس، 8:00 صباحًا - 3:00 مساءً">Working hours: Sunday to Thursday, 8:00 AM - 3:00 PM</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Company Challenges Section -->
+    <section class="challenges-section">
+      <div class="container">
+        <div class="section-title-container">
+          <h2 class="section-title" data-ar="التحديات التي تواجه عمل الشركة" data-en="Challenges Facing the Company">Challenges Facing the Company</h2>
+          <p class="section-subtitle" data-ar="العقبات الرئيسية التي تؤثر على أداء وعمليات الشركة" data-en="Major obstacles affecting the company's performance and operations">Major obstacles affecting the company's performance and operations</p>
+        </div>
+        
+        <div class="challenges-container">
+          <div class="challenge-card">
+            <div class="challenge-icon">
+              <i class="fas fa-store-slash"></i>
+            </div>
+            <div class="challenge-content">
+              <h3 data-ar="صعوبة تسويق المنتجات" data-en="Marketing Difficulties">Marketing Difficulties</h3>
+              <p data-ar="صعوبة تسويق المنتجات بسبب المنافسة الشديدة في السوق المحلي لاغراق السوق بالمنتجات المماثلة نتيجة الاستيراد العشوائي وعدم تفعيل قانون حماية المنتج على الرغم من اقراره" data-en="Difficulty in marketing products due to intense competition in the local market caused by random importing and failure to implement product protection laws despite their approval">Difficulty in marketing products due to intense competition in the local market caused by random importing and failure to implement product protection laws despite their approval</p>
+            </div>
+          </div>
+          
+          <div class="challenge-card">
+            <div class="challenge-icon">
+              <i class="fas fa-industry"></i>
+            </div>
+            <div class="challenge-content">
+              <h3 data-ar="صعوبة توفير المواد الأولية" data-en="Raw Materials Shortage">Raw Materials Shortage</h3>
+              <p data-ar="الصعوبة في توفير بعض المواد الاولية الاستيرادية الحاكمة في الانتاج" data-en="Difficulty in providing certain imported raw materials that are critical for production">Difficulty in providing certain imported raw materials that are critical for production</p>
+            </div>
+          </div>
+          
+          <div class="challenge-card">
+            <div class="challenge-icon">
+              <i class="fas fa-user-graduate"></i>
+            </div>
+            <div class="challenge-content">
+              <h3 data-ar="فقدان الخبرات" data-en="Loss of Expertise">Loss of Expertise</h3>
+              <p data-ar="عدم تناقل الخبرات بين الكوادر لعدم وجود فرص تعيين للكوادر الشابة وهناك اعداد كبيرة من العاملين والفنيين والمهندسين تم احالتهم للتقاعد مما يؤدي الى تناقص الخبرات والمهارات بشكل مستمر" data-en="Lack of knowledge transfer between staff due to limited recruitment opportunities for young talent, with many workers, technicians, and engineers retiring, leading to continuous decline in expertise and skills">Lack of knowledge transfer between staff due to limited recruitment opportunities for young talent, with many workers, technicians, and engineers retiring, leading to continuous decline in expertise and skills</p>
+            </div>
+          </div>
+          
+          <div class="challenge-card">
+            <div class="challenge-icon">
+              <i class="fas fa-money-bill-wave"></i>
+            </div>
+            <div class="challenge-content">
+              <h3 data-ar="صعوبة استحصال الديون" data-en="Debt Collection Issues">Debt Collection Issues</h3>
+              <p data-ar="صعوبة استحصال الديون من الشركات التابعة الى وزارة الكهرباء والتي تعتبر الزبون الرئيسي للشركة مما انعكس سلباً على توفر السيولة النقدية في الشركة المطلوبة لتوفير مستلزمات الإنتاج" data-en="Difficulty in collecting debts from companies affiliated with the Ministry of Electricity, which is the main customer of the company, negatively affecting the company's cash flow needed to provide production requirements">Difficulty in collecting debts from companies affiliated with the Ministry of Electricity, which is the main customer of the company, negatively affecting the company's cash flow needed to provide production requirements</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-logo">
+        <img src="LOGO.png" alt="شعار شركة ديالى" width="80">
+        <p data-en="Ministry of Industry and Minerals - Diyala State Company">
+          وزارة الصناعة والمعادن - شركة ديالى العامة
+        </p>
+      </div>
+      <div class="social-links">
+        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+    </div>
+    <div class="copyright">
+      <p>© 2024 شركة ديالى العامة. جميع الحقوق محفوظة.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
+ 

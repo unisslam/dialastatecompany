@@ -1,0 +1,257 @@
+/* Products Mind Map Styles */
+.mind-map-container {
+  margin: 50px auto;
+  padding: 20px;
+  max-width: 1200px;
+  position: relative;
+  overflow: hidden;
+  direction: rtl; /* For Arabic alignment */
+}
+
+.mind-map {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 600px;
+  position: relative;
+}
+
+.central-node {
+  width: 180px;
+  height: 180px;
+  background-color: var(--color-primary);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  position: relative;
+  z-index: 10;
+  padding: 15px;
+  border: 3px solid white;
+  transition: all 0.3s ease;
+}
+
+.central-node:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
+}
+
+.branches-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.branch {
+  position: absolute;
+  transition: all 0.4s ease;
+}
+
+.branch.highlight {
+  transform: scale(1.1);
+  z-index: 20;
+}
+
+.branch-1 { top: 5%; left: 50%; }
+.branch-2 { top: 25%; left: 85%; }
+.branch-3 { top: 75%; left: 85%; }
+.branch-4 { top: 75%; left: 15%; }
+.branch-5 { top: 25%; left: 15%; }
+
+.branch-node {
+  width: 160px;
+  height: 160px;
+  background-color: var(--color-secondary);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  position: relative;
+  padding: 10px;
+  border: 2px solid white;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.branch-node:hover {
+  transform: scale(1.1);
+}
+
+.branch-node i {
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+.branch-path {
+  position: absolute;
+  background-color: #ddd;
+  height: 3px;
+  transform-origin: 0 0;
+  z-index: 1;
+}
+
+.path-animated .branch-path {
+  background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
+}
+
+.sub-nodes-container {
+  position: absolute;
+  display: none;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 250px;
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  z-index: 30;
+  transition: all 0.3s ease;
+  border: 1px solid #ddd;
+}
+
+.branch-1 .sub-nodes-container { left: 110%; top: 0; }
+.branch-2 .sub-nodes-container { right: 110%; top: 0; }
+.branch-3 .sub-nodes-container { right: 110%; top: 0; }
+.branch-4 .sub-nodes-container { left: 110%; top: 0; }
+.branch-5 .sub-nodes-container { left: 110%; top: 0; }
+
+.branch-node.collapsible.active + .sub-nodes-container {
+  display: flex;
+}
+
+.sub-node {
+  background-color: white;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 14px;
+  color: #333;
+  border-left: 4px solid var(--color-secondary);
+  transition: all 0.2s ease;
+}
+
+.sub-node:hover {
+  transform: translateX(5px);
+  background-color: #f8f8f8;
+}
+
+/* Products gallery for activating mind map branches */
+.products-gallery {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.gallery-item {
+  width: 120px;
+  height: 120px;
+  border-radius: 15px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: all 0.3s ease;
+}
+
+.gallery-item .item-label {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 8px;
+  font-size: 12px;
+  text-align: center;
+  transform: translateY(100%);
+  transition: all 0.3s ease;
+}
+
+.gallery-item:hover .item-label,
+.gallery-item.active .item-label {
+  transform: translateY(0);
+}
+
+.gallery-item:hover,
+.gallery-item.active {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.gallery-item.active {
+  border: 3px solid var(--color-primary);
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  .mind-map {
+    flex-direction: column;
+    align-items: center;
+    min-height: auto;
+  }
+  
+  .branches-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-top: 40px;
+  }
+  
+  .branch {
+    position: relative;
+    top: auto;
+    left: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .branch-path {
+    display: none;
+  }
+  
+  .sub-nodes-container {
+    position: relative;
+    left: auto;
+    right: auto;
+    top: auto;
+    margin-top: 20px;
+    width: 100%;
+  }
+  
+  .branch-1 .sub-nodes-container,
+  .branch-2 .sub-nodes-container,
+  .branch-3 .sub-nodes-container,
+  .branch-4 .sub-nodes-container,
+  .branch-5 .sub-nodes-container {
+    left: auto;
+    right: auto;
+    top: auto;
+  }
+} 
