@@ -67,6 +67,9 @@ document.addEventListener('DOMContentLoaded', function() {
   // Initialize services location section
   initServicesLocationSection();
   
+  // Initialize organizational chart
+  initOrgChart();
+  
   // Initialize back to top button
   initBackToTopButton();
   
@@ -2530,3 +2533,755 @@ function initBackToTopButton() {
   // Initial check in case page was refreshed while scrolled down
   toggleBackToTopButton();
 }
+
+// Organizational Chart Functionality
+function initOrgChart() {
+  const orgChart = document.querySelector('.org-chart');
+  const zoomInBtn = document.querySelector('.org-zoom-in');
+  const zoomOutBtn = document.querySelector('.org-zoom-out');
+  const resetBtn = document.querySelector('.org-reset');
+  
+  if (!orgChart || !zoomInBtn || !zoomOutBtn || !resetBtn) return;
+  
+  let scale = 1;
+  let panning = false;
+  let pointX = 0;
+  let pointY = 0;
+  let startX = 0;
+  let startY = 0;
+  
+  // Add sub-department count badges
+  function addSubDeptBadges() {
+    const departmentCards = document.querySelectorAll('.org-card.department');
+    
+    departmentCards.forEach(card => {
+      // Remove any existing badges first
+      const existingBadge = card.querySelector('.subdept-badge');
+      if (existingBadge) {
+        existingBadge.remove();
+      }
+      
+      // Get sub-departments
+      const subDepts = card.querySelector('.org-sub-dept');
+      if (subDepts) {
+        const subDeptCount = subDepts.querySelectorAll('span').length;
+        
+        // Create badge element
+        if (subDeptCount > 0) {
+          const badge = document.createElement('div');
+          badge.className = 'subdept-badge';
+          badge.textContent = subDeptCount;
+          
+          // Add badge to card
+          card.appendChild(badge);
+        }
+      }
+    });
+  }
+  
+  // Add connector lines dynamically
+  function addConnectorLines() {
+    const connectors = document.querySelector('.org-connectors');
+    if (!connectors) return;
+    
+    // Clear existing connectors
+    connectors.innerHTML = '';
+    
+    // Add vertical line from executive to level 2
+    const executive = document.querySelector('.level-1 .org-card');
+    const level2 = document.querySelector('.level-2');
+    
+    if (executive && level2) {
+      const execRect = executive.getBoundingClientRect();
+      const level2Rect = level2.getBoundingClientRect();
+      
+      const verticalLine = document.createElement('div');
+      verticalLine.className = 'connector-line vertical';
+      verticalLine.style.top = (execRect.bottom - connectors.getBoundingClientRect().top) + 'px';
+      verticalLine.style.left = (execRect.left + execRect.width / 2 - connectors.getBoundingClientRect().left) + 'px';
+      verticalLine.style.height = (level2Rect.top - execRect.bottom) + 'px';
+      
+      connectors.appendChild(verticalLine);
+    }
+    
+    // Add horizontal line in level 2
+    const level2Cards = document.querySelectorAll('.level-2 .org-card');
+    if (level2Cards.length > 1) {
+      const firstCard = level2Cards[0];
+      const lastCard = level2Cards[level2Cards.length - 1];
+      
+      const firstRect = firstCard.getBoundingClientRect();
+      const lastRect = lastCard.getBoundingClientRect();
+      
+      const horizontalLine = document.createElement('div');
+      horizontalLine.className = 'connector-line horizontal';
+      horizontalLine.style.top = (firstRect.top + firstRect.height / 2 - connectors.getBoundingClientRect().top) + 'px';
+      horizontalLine.style.left = (firstRect.left + firstRect.width / 2 - connectors.getBoundingClientRect().left) + 'px';
+      horizontalLine.style.width = (lastRect.left + lastRect.width / 2 - firstRect.left - firstRect.width / 2) + 'px';
+      
+      connectors.appendChild(horizontalLine);
+    }
+    
+    // Add vertical lines from level 2 to level 3
+    const level3 = document.querySelector('.level-3');
+    if (level2 && level3) {
+      const level2Rect = level2.getBoundingClientRect();
+      const level3Rect = level3.getBoundingClientRect();
+      
+      const verticalLine = document.createElement('div');
+      verticalLine.className = 'connector-line vertical';
+      verticalLine.style.top = (level2Rect.bottom - connectors.getBoundingClientRect().top) + 'px';
+      verticalLine.style.left = '50%';
+      verticalLine.style.height = (level3Rect.top - level2Rect.bottom) + 'px';
+      
+      connectors.appendChild(verticalLine);
+    }
+  }
+  
+  // Zoom functionality
+  zoomInBtn.addEventListener('click', function() {
+    if (scale < 2) { // Max zoom
+      scale += 0.1;
+      orgChart.style.transform = `scale(${scale})`;
+    }
+  });
+  
+  zoomOutBtn.addEventListener('click', function() {
+    if (scale > 0.5) { // Min zoom
+      scale -= 0.1;
+      orgChart.style.transform = `scale(${scale})`;
+    }
+  });
+  
+  resetBtn.addEventListener('click', function() {
+    scale = 1;
+    orgChart.style.transform = 'scale(1)';
+    orgChart.style.left = '0';
+    orgChart.style.top = '0';
+  });
+  
+  // Panning functionality
+  orgChart.addEventListener('mousedown', function(e) {
+    if (e.target.closest('.org-card.department')) return; // Don't start panning when clicking departments
+    
+    e.preventDefault();
+    panning = true;
+    startX = e.clientX - pointX;
+    startY = e.clientY - pointY;
+    orgChart.style.cursor = 'grabbing';
+  });
+  
+  document.addEventListener('mousemove', function(e) {
+    if (!panning) return;
+    
+    pointX = e.clientX - startX;
+    pointY = e.clientY - startY;
+    
+    orgChart.style.left = pointX + 'px';
+    orgChart.style.top = pointY + 'px';
+  });
+  
+  document.addEventListener('mouseup', function() {
+    panning = false;
+    orgChart.style.cursor = 'grab';
+  });
+  
+  // Make cards interactive with expandable sections
+  const departmentCards = document.querySelectorAll('.org-card.department');
+  departmentCards.forEach(card => {
+    // Only make cards with sub-departments clickable
+    if (card.querySelector('.org-sub-dept')) {
+      card.addEventListener('click', function(e) {
+        e.stopPropagation(); // Prevent panning when clicking departments
+        
+        // Close other cards
+        departmentCards.forEach(otherCard => {
+          if (otherCard !== card) {
+            otherCard.classList.remove('active');
+          }
+        });
+        
+        // Toggle current card
+        this.classList.toggle('active');
+      });
+    }
+  });
+  
+  // Handle touch events
+  if ('ontouchstart' in window) {
+    const touchHandler = function(card) {
+      card.addEventListener('touchend', function(e) {
+        if (card.querySelector('.org-sub-dept')) {
+          e.preventDefault();
+          e.stopPropagation();
+          
+          // Close other cards
+          departmentCards.forEach(otherCard => {
+            if (otherCard !== card) {
+              otherCard.classList.remove('active');
+            }
+          });
+          
+          // Toggle current card
+          this.classList.toggle('active');
+        }
+      });
+    };
+    
+    departmentCards.forEach(touchHandler);
+  }
+  
+  // Initial calls
+  window.addEventListener('load', function() {
+    addConnectorLines();
+    addSubDeptBadges();
+  });
+  
+  window.addEventListener('resize', debounce(function() {
+    addConnectorLines();
+    addSubDeptBadges();
+  }, 250));
+  
+  // Call immediately in case the DOM is already loaded
+  addSubDeptBadges();
+}
+
+// Initialize Performance Indicators Charts
+function initPerformanceIndicatorsCharts() {
+  // 1. التأثير البيئي: مقارنة نسبة المياه الصناعية المعالجة
+  const treatedWaterCtx = document.getElementById('treatedWaterChart');
+  if (treatedWaterCtx) {
+    new Chart(treatedWaterCtx, {
+      type: 'bar',
+      data: {
+        labels: ['2024', '2023'],
+        datasets: [{
+          label: 'المياه الصناعية المعالجة م3/يوم',
+          data: [1000, 1000],
+          backgroundColor: [
+            'rgba(75, 192, 192, 0.8)',
+            'rgba(75, 192, 192, 0.8)'
+          ],
+          borderColor: [
+            'rgba(75, 192, 192, 1)',
+            'rgba(75, 192, 192, 1)'
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 1200
+          }
+        },
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: 'مقارنة نسبة المياه الصناعية المعالجة م3/يوم'
+          }
+        }
+      }
+    });
+  }
+
+  // 2. بيئة العمل: مقارنة شراء الشتلات
+  const plantPurchaseCtx = document.getElementById('plantPurchaseChart');
+  if (plantPurchaseCtx) {
+    new Chart(plantPurchaseCtx, {
+      type: 'bar',
+      data: {
+        labels: ['2024', '2023', '2022'],
+        datasets: [{
+          label: 'عدد الشتلات',
+          data: [300, 200, 100],
+          backgroundColor: [
+            'rgba(255, 159, 64, 0.8)',
+            'rgba(255, 159, 64, 0.8)',
+            'rgba(255, 159, 64, 0.8)'
+          ],
+          borderColor: [
+            'rgba(255, 159, 64, 1)',
+            'rgba(255, 159, 64, 1)',
+            'rgba(255, 159, 64, 1)'
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 350
+          }
+        },
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: 'مقارنة شراء الشتلات'
+          }
+        }
+      }
+    });
+  }
+
+  // 3. مؤشر السلامة المهنية والصحية: الفحص الدوري للعاملين
+  const periodicCheckupCtx = document.getElementById('periodicCheckupChart');
+  if (periodicCheckupCtx) {
+    new Chart(periodicCheckupCtx, {
+      type: 'bar',
+      data: {
+        labels: ['2024', '2023'],
+        datasets: [{
+          label: 'عدد الفحوصات',
+          data: [242, 174],
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.8)',
+            'rgba(255, 99, 132, 0.8)'
+          ],
+          borderColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(255, 99, 132, 1)'
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 300
+          }
+        },
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: 'الفحص الدوري للعاملين في الشركة'
+          }
+        }
+      }
+    });
+  }
+
+  // 4. مؤشر السلامة المهنية والصحية: توفير معدات السلامة
+  const safetyEquipmentCtx = document.getElementById('safetyEquipmentChart');
+  if (safetyEquipmentCtx) {
+    new Chart(safetyEquipmentCtx, {
+      type: 'doughnut',
+      data: {
+        labels: ['خوذة رأس', 'أحذية أمان', 'كفوف', 'بدلات عمل'],
+        datasets: [{
+          label: 'توزيع معدات السلامة',
+          data: [400, 400, 750, 350],
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.7)',
+            'rgba(54, 162, 235, 0.7)',
+            'rgba(255, 206, 86, 0.7)',
+            'rgba(75, 192, 192, 0.7)'
+          ],
+          borderColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)'
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: 'توزيع معدات السلامة'
+          }
+        }
+      }
+    });
+  }
+
+  // 5. الأنشطة البيئية والاقتصادية والاجتماعية: مقارنة السلات الغذائية
+  const foodBasketsCtx = document.getElementById('foodBasketsChart');
+  if (foodBasketsCtx) {
+    new Chart(foodBasketsCtx, {
+      type: 'bar',
+      data: {
+        labels: ['2024', '2023'],
+        datasets: [{
+          label: 'عدد السلات الغذائية',
+          data: [250, 250],
+          backgroundColor: [
+            'rgba(220, 53, 69, 0.8)',
+            'rgba(220, 53, 69, 0.8)'
+          ],
+          borderColor: [
+            'rgba(220, 53, 69, 1)',
+            'rgba(220, 53, 69, 1)'
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 300
+          }
+        },
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: 'مقارنة السلات الغذائية'
+          }
+        }
+      }
+    });
+  }
+
+  // 6. الالتزام بالتشريعات والحوكمة المؤسسية: الأنظمة الإلكترونية
+  const electronicSystemsCtx = document.getElementById('electronicSystemsChart');
+  if (electronicSystemsCtx) {
+    new Chart(electronicSystemsCtx, {
+      type: 'bar',
+      data: {
+        labels: ['حركة الدفع', 'نظام التراسل'],
+        datasets: [{
+          label: 'الأنظمة الإلكترونية',
+          data: [715, 80],
+          backgroundColor: [
+            'rgba(220, 53, 69, 0.8)',
+            'rgba(220, 53, 69, 0.8)'
+          ],
+          borderColor: [
+            'rgba(220, 53, 69, 1)',
+            'rgba(220, 53, 69, 1)'
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 800
+          }
+        },
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: 'الأنظمة الإلكترونية'
+          }
+        }
+      }
+    });
+  }
+
+  // 7. بيئة العمل: مقارنة المبالغ المصروفة لشراء مواد الصيانة والأثاث
+  const maintenanceExpensesCtx = document.getElementById('maintenanceExpensesChart');
+  if (maintenanceExpensesCtx) {
+    new Chart(maintenanceExpensesCtx, {
+      type: 'pie',
+      data: {
+        labels: ['صيانة 2023', 'صيانة 2024', 'أثاث 2023', 'أثاث 2024'],
+        datasets: [{
+          label: 'المبالغ (مليون دينار)',
+          data: [101, 107, 85, 179],
+          backgroundColor: [
+            'rgba(220, 53, 69, 0.7)',
+            'rgba(111, 66, 193, 0.7)',
+            'rgba(255, 193, 7, 0.7)',
+            'rgba(111, 45, 168, 0.7)'
+          ],
+          borderColor: [
+            'rgba(220, 53, 69, 1)',
+            'rgba(111, 66, 193, 1)',
+            'rgba(255, 193, 7, 1)',
+            'rgba(111, 45, 168, 1)'
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: 'المبالغ المصروفة للصيانة والأثاث (مليون دينار)'
+          }
+        }
+      }
+    });
+  }
+
+  // 8. أنشطة بيئية واقتصادية واجتماعية: المساعدات المالية للموظفين
+  const financialAssistanceCtx = document.getElementById('financialAssistanceChart');
+  if (financialAssistanceCtx) {
+    new Chart(financialAssistanceCtx, {
+      type: 'bar',
+      data: {
+        labels: ['2024', '2023', '2022'],
+        datasets: [{
+          label: 'المساعدات المالية (مليون دينار)',
+          data: [142, 144, 130],
+          backgroundColor: [
+            'rgba(255, 159, 64, 0.8)',
+            'rgba(255, 159, 64, 0.8)',
+            'rgba(255, 159, 64, 0.8)'
+          ],
+          borderColor: [
+            'rgba(255, 159, 64, 1)',
+            'rgba(255, 159, 64, 1)',
+            'rgba(255, 159, 64, 1)'
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 160
+          }
+        },
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: 'المساعدات المالية للموظفين (مليون دينار)'
+          }
+        }
+      }
+    });
+  }
+
+  // 9. الرأي العام: الجوائز وكتب الشكر والتقدير
+  const awardsCtx = document.getElementById('awardsChart');
+  if (awardsCtx) {
+    new Chart(awardsCtx, {
+      type: 'bar',
+      data: {
+        labels: ['2024', '2023', '2022'],
+        datasets: [
+          {
+            label: 'الجوائز',
+            data: [3, 0, 0],
+            backgroundColor: 'rgba(40, 167, 69, 0.8)',
+            borderColor: 'rgba(40, 167, 69, 1)',
+            borderWidth: 1
+          },
+          {
+            label: 'كتب الشكر',
+            data: [16, 12, 10],
+            backgroundColor: 'rgba(255, 193, 7, 0.8)',
+            borderColor: 'rgba(255, 193, 7, 1)',
+            borderWidth: 1
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 18
+          }
+        },
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: 'الجوائز وكتب الشكر والتقدير'
+          }
+        }
+      }
+    });
+  }
+
+  // 10. التأثير المؤسسي: الزيارات والتدريب لطلبة الجامعات والمعاهد
+  const universityVisitsCtx = document.getElementById('universityVisitsChart');
+  if (universityVisitsCtx) {
+    new Chart(universityVisitsCtx, {
+      type: 'bar',
+      data: {
+        labels: ['كلية الرافدين', 'معهد', 'علوم', 'هندسة'],
+        datasets: [
+          {
+            label: 'الزيارات',
+            data: [1, 15, 2, 2],
+            backgroundColor: 'rgba(0, 123, 255, 0.8)',
+            borderColor: 'rgba(0, 123, 255, 1)',
+            borderWidth: 1
+          },
+          {
+            label: 'التدريب',
+            data: [0, 10, 6, 7],
+            backgroundColor: 'rgba(108, 117, 125, 0.8)',
+            borderColor: 'rgba(108, 117, 125, 1)',
+            borderWidth: 1
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 16
+          }
+        },
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: 'الزيارات والتدريب لطلبة الجامعات والمعاهد'
+          }
+        }
+      }
+    });
+  }
+
+  // 11. مقابلات السيد المدير العام
+  const managerMeetingsCtx = document.getElementById('managerMeetingsChart');
+  if (managerMeetingsCtx) {
+    new Chart(managerMeetingsCtx, {
+      type: 'bar',
+      data: {
+        labels: ['2024', '2023', '2022'],
+        datasets: [{
+          label: 'عدد المقابلات',
+          data: [130, 119, 110],
+          backgroundColor: [
+            'rgba(220, 53, 69, 0.8)',
+            'rgba(220, 53, 69, 0.8)',
+            'rgba(220, 53, 69, 0.8)'
+          ],
+          borderColor: [
+            'rgba(220, 53, 69, 1)',
+            'rgba(220, 53, 69, 1)',
+            'rgba(220, 53, 69, 1)'
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 140
+          }
+        },
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: 'مقابلات السيد المدير العام مع الموظفين والمواطنين'
+          }
+        }
+      }
+    });
+  }
+
+  // 12. إحصائيات توزيع معدات السلامة للعاملين
+  const safetyEquipmentDistributionCtx = document.getElementById('safetyEquipmentDistributionChart');
+  if (safetyEquipmentDistributionCtx) {
+    new Chart(safetyEquipmentDistributionCtx, {
+      type: 'bar',
+      data: {
+        labels: ['الإنتاج', 'الصيانة', 'التسويق'],
+        datasets: [
+          {
+            label: 'بدلة عمل',
+            data: [350, 40, 10],
+            backgroundColor: 'rgba(0, 123, 255, 0.7)',
+            borderColor: 'rgba(0, 123, 255, 1)',
+            borderWidth: 1
+          },
+          {
+            label: 'حذاء سيفتي',
+            data: [350, 40, 10],
+            backgroundColor: 'rgba(220, 53, 69, 0.7)',
+            borderColor: 'rgba(220, 53, 69, 1)',
+            borderWidth: 1
+          },
+          {
+            label: 'كفوف',
+            data: [650, 80, 20],
+            backgroundColor: 'rgba(40, 167, 69, 0.7)',
+            borderColor: 'rgba(40, 167, 69, 1)',
+            borderWidth: 1
+          },
+          {
+            label: 'صدرية نسائية',
+            data: [10, 0, 5],
+            backgroundColor: 'rgba(111, 66, 193, 0.7)',
+            borderColor: 'rgba(111, 66, 193, 1)',
+            borderWidth: 1
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 700
+          }
+        },
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: 'توزيع معدات السلامة للعاملين حسب القسم'
+          }
+        }
+      }
+    });
+  }
+}
+
+// Call the function to initialize the performance indicators charts when document is loaded
+document.addEventListener('DOMContentLoaded', function() {
+  // ... existing initialization code ...
+  
+  // Initialize the performance indicators charts
+  initPerformanceIndicatorsCharts();
+});
