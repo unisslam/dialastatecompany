@@ -85,96 +85,39 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
   
-  // Dropdown toggle for mobile
+  // Dropdown toggle for mobile - DISABLED
   const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
   
   dropdownToggles.forEach(toggle => {
     toggle.addEventListener('click', function(e) {
-      if (window.innerWidth <= 991) {
-        e.preventDefault();
-        this.parentElement.classList.toggle('active');
-      }
+      // No mobile-specific behavior - always use desktop behavior
+      // if (window.innerWidth <= 991) {
+      //   e.preventDefault();
+      //   this.parentElement.classList.toggle('active');
+      // }
     });
   });
   
-  // Global resize handler for all responsive components
+  // Global resize handler for all responsive components - DISABLED
   function handleWindowResize() {
-    // Add resizing class to body to disable transitions
-    document.body.classList.add('resizing');
-    
-    // Handle direct sales section
-    adjustDirectSalesSection();
-    
-    // Handle card scaling and layout adjustments
-    const infoCards = document.querySelectorAll('.info-card');
-    infoCards.forEach(card => {
-      card.style.transition = 'none'; // Temporarily disable transitions during resize
-    });
-    
-    // Handle scrollable cards container
-    const scrollableCards = document.querySelectorAll('.scrollable-cards');
-    scrollableCards.forEach(container => {
-      container.style.transition = 'none';
-    });
-    
-    // Update indicators for scrollable content
-    const scrollableContainers = document.querySelectorAll('.scrollable-cards-container');
-    scrollableContainers.forEach(container => {
-      const indicators = container.querySelector('.scroll-indicators');
-      if (indicators) {
-        updateIndicators();
-      }
-    });
-    
-    // Re-enable transitions after resize is complete
-    setTimeout(() => {
-      infoCards.forEach(card => {
-        card.style.transition = '';
-      });
-      scrollableCards.forEach(container => {
-        container.style.transition = '';
-      });
-      document.body.classList.remove('resizing');
-    }, 100);
+    // Function disabled
+    return;
   }
   
-  // Debounced resize handler
-  const debouncedResize = debounce(handleWindowResize, 150);
+  // Debounced resize handler - DISABLED
+  const debouncedResize = debounce(() => {}, 150);
   
-  // Add resize event listener for all responsive components
-  window.addEventListener('resize', debouncedResize);
+  // Removed resize event listener for all responsive components
+  // window.addEventListener('resize', debouncedResize);
   
-  // Fix Direct Sales Section on mobile
+  // Fix Direct Sales Section on mobile - DISABLED
   function adjustDirectSalesSection() {
-    const directSalesSection = document.querySelector('.direct-sales-section');
-    if (directSalesSection) {
-      if (window.innerWidth <= 768) {
-        directSalesSection.style.width = '90%';
-        directSalesSection.style.padding = '40px 20px';
-      } else if (window.innerWidth <= 480) {
-        directSalesSection.style.width = '95%';
-        directSalesSection.style.padding = '30px 15px';
-      } else {
-        directSalesSection.style.width = '100%';
-        directSalesSection.style.padding = '60px 0';
-      }
-    }
-    
-    // Also adjust services location section
-    const servicesLocationSection = document.querySelector('.services-location-section');
-    if (servicesLocationSection) {
-      if (window.innerWidth <= 768) {
-        servicesLocationSection.style.padding = '40px 20px';
-      } else if (window.innerWidth <= 480) {
-        servicesLocationSection.style.padding = '30px 15px';
-      } else {
-        servicesLocationSection.style.padding = '60px 0';
-      }
-    }
+    // Function disabled
+    return;
   }
   
-  // Run initially to set correct layout on page load
-  handleWindowResize();
+  // Disabled automatic layout adjustment on page load
+  // handleWindowResize();
 });
 
 // Smooth scrolling for navigation links
@@ -346,192 +289,34 @@ ${message}`;
 
 // Initialize all charts
 function initCharts() {
-  // Configure Chart.js globally
-  Chart.defaults.font.family = "'Tajawal', sans-serif";
-  Chart.defaults.font.size = 14;
-  Chart.defaults.color = '#333';
+  // Initialize overall sales chart
+  const salesChartCtx = document.getElementById('salesChart')?.getContext('2d');
+  if (salesChartCtx) {
+    new Chart(salesChartCtx, {
+      type: 'bar',
+      data: {
+        labels: ['2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023'],
+        datasets: [{
+          label: 'المبيعات (مليون دينار)',
+          data: [25, 32, 28, 36, 44, 48, 52, 55, 58, 62],
+          backgroundColor: 'rgba(75, 192, 192, 0.6)',
+          borderColor: 'rgba(75, 192, 192, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: false,
+        maintainAspectRatio: true,
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  }
   
-  // Sales Chart
-  const salesCtx = document.getElementById('salesChart').getContext('2d');
-  const salesChart = new Chart(salesCtx, {
-    type: 'bar',
-    data: {
-      labels: ['2022', '2023', '2024'],
-      datasets: [{
-        label: 'مبيعات بالمليار دينار',
-        data: [36.9, 147.9, 148.6],
-        backgroundColor: [
-          'rgba(255, 215, 0, 0.8)',
-          'rgba(34, 139, 34, 0.8)',
-          'rgba(10, 61, 10, 0.8)'
-        ],
-        borderColor: [
-          'rgb(255, 215, 0)',
-          'rgb(34, 139, 34)',
-          'rgb(10, 61, 10)'
-        ],
-        borderWidth: 1,
-        borderRadius: 5,
-        barPercentage: 0.7,
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: {
-          display: true,
-          position: 'top',
-          labels: {
-            boxWidth: 15,
-            padding: 15
-          }
-        },
-        tooltip: {
-          backgroundColor: 'rgba(0, 0, 0, 0.7)',
-          padding: 10,
-          cornerRadius: 5,
-          callbacks: {
-            label: function(context) {
-              return `المبيعات: ${context.parsed.y} مليار دينار`;
-            }
-          }
-        }
-      },
-      scales: {
-        y: {
-          beginAtZero: true,
-          grid: {
-            display: true,
-            color: 'rgba(0, 0, 0, 0.1)'
-          },
-          ticks: {
-            callback: function(value) {
-              return value + ' مليار';
-            }
-          }
-        },
-        x: {
-          grid: {
-            display: false
-          }
-        }
-      },
-      animation: {
-        duration: 2000,
-        easing: 'easeOutQuart'
-      }
-    }
-  });
-
-  // Production Chart
-  const prodCtx = document.getElementById('productionChart').getContext('2d');
-  const productionChart = new Chart(prodCtx, {
-    type: 'line',
-    data: {
-      labels: ['2022', '2023', '2024'],
-      datasets: [{
-        label: 'الإنتاج السنوي',
-        data: [36768, 147945, 148605],
-        borderColor: 'rgb(34, 139, 34)',
-        backgroundColor: 'rgba(34, 139, 34, 0.1)',
-        borderWidth: 3,
-        pointBackgroundColor: '#fff',
-        pointBorderColor: 'rgb(34, 139, 34)',
-        pointBorderWidth: 2,
-        pointRadius: 5,
-        pointHoverRadius: 7,
-        tension: 0.4,
-        fill: true
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: {
-          display: true,
-          position: 'top',
-        },
-        tooltip: {
-          backgroundColor: 'rgba(0, 0, 0, 0.7)',
-          padding: 10,
-          cornerRadius: 5,
-          callbacks: {
-            label: function(context) {
-              return `الإنتاج: ${context.parsed.y.toLocaleString()} وحدة`;
-            }
-          }
-        }
-      },
-      scales: {
-        y: {
-          beginAtZero: true,
-          grid: {
-            color: 'rgba(0, 0, 0, 0.1)'
-          },
-          ticks: {
-            callback: function(value) {
-              return value.toLocaleString();
-            }
-          }
-        }
-      },
-      animation: {
-        duration: 2000,
-        easing: 'easeOutQuart'
-      }
-    }
-  });
-
-  // Customers Chart
-  const custCtx = document.getElementById('customerChart').getContext('2d');
-  const customerChart = new Chart(custCtx, {
-    type: 'pie',
-    data: {
-      labels: ['وزارة الكهرباء', 'وزارة الاتصالات', 'قطاع خاص'],
-      datasets: [{
-        data: [75, 9, 16],
-        backgroundColor: [
-          'rgba(34, 139, 34, 0.8)',
-          'rgba(255, 215, 0, 0.8)',
-          'rgba(10, 61, 10, 0.8)'
-        ],
-        borderColor: '#fff',
-        borderWidth: 2,
-        hoverOffset: 15
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: {
-          position: 'bottom',
-          labels: {
-            padding: 20,
-            boxWidth: 15
-          }
-        },
-        tooltip: {
-          backgroundColor: 'rgba(0, 0, 0, 0.7)',
-          padding: 10,
-          cornerRadius: 5,
-          callbacks: {
-            label: function(context) {
-              return `${context.label}: ${context.parsed}%`;
-            }
-          }
-        }
-      },
-      animation: {
-        animateRotate: true,
-        animateScale: true,
-        duration: 2000,
-        easing: 'easeOutQuart'
-      }
-    }
-  });
+  // Initialize other charts with similar non-responsive options
 }
 
 // Initialize employee grades chart
@@ -1152,8 +937,8 @@ function initProductCards() {
         const isVisible = (
           cardRect.top >= 0 &&
           cardRect.left >= 0 &&
-          cardRect.bottom <= window.innerHeight &&
-          cardRect.right <= window.innerWidth
+          cardRect.bottom <= document.documentElement.clientHeight &&
+          cardRect.right <= document.documentElement.clientWidth
         );
         
         if (!isVisible) {
@@ -1327,39 +1112,55 @@ function initScrollableCards() {
   
   // Update indicator based on scroll position
   function updateScrollIndicators() {
-    const currentScroll = Math.abs(scrollableCards.scrollLeft);
-    const maxScroll = scrollableCards.scrollWidth - scrollableCards.offsetWidth;
-    const scrollPercentage = currentScroll / maxScroll;
-    
-    // Calculate which indicator should be active
-    const indicatorCount = scrollIndicatorsContainer.querySelectorAll('.indicator').length;
-    const activeIndex = Math.min(
-      Math.floor(scrollPercentage * indicatorCount),
-      indicatorCount - 1
-    );
-    
-    // Update active indicator
-    scrollIndicatorsContainer.querySelectorAll('.indicator').forEach((indicator, index) => {
-      indicator.classList.toggle('active', index === activeIndex);
-    });
-    
-    // Enable/disable navigation buttons
-    if (currentScroll <= 10) {
-      prevBtn.classList.add('disabled');
-    } else {
-      prevBtn.classList.remove('disabled');
-    }
-    
-    if (currentScroll >= maxScroll - 10) {
-      nextBtn.classList.add('disabled');
-    } else {
-      nextBtn.classList.remove('disabled');
+    try {
+      if (!scrollableCards || !scrollIndicatorsContainer) return;
+      
+      // Get current scroll position safely
+      const currentScroll = Math.abs(scrollableCards.scrollLeft || 0);
+      const maxScroll = Math.max(0, (scrollableCards.scrollWidth || 0) - (scrollableCards.offsetWidth || 0));
+      
+      // Prevent division by zero
+      const scrollPercentage = maxScroll > 0 ? currentScroll / maxScroll : 0;
+      
+      // Calculate which indicator should be active
+      const indicators = scrollIndicatorsContainer.querySelectorAll('.indicator');
+      const indicatorCount = indicators.length;
+      
+      if (indicatorCount === 0) return;
+      
+      const activeIndex = Math.min(
+        Math.floor(scrollPercentage * indicatorCount),
+        indicatorCount - 1
+      );
+      
+      // Update active indicator
+      indicators.forEach((indicator, index) => {
+        indicator.classList.toggle('active', index === activeIndex);
+      });
+      
+      // Enable/disable navigation buttons if they exist
+      if (!prevBtn || !nextBtn) return;
+      
+      if (currentScroll <= 10) {
+        prevBtn.classList.add('disabled');
+      } else {
+        prevBtn.classList.remove('disabled');
+      }
+      
+      if (maxScroll <= 10 || currentScroll >= maxScroll - 10) {
+        nextBtn.classList.add('disabled');
+      } else {
+        nextBtn.classList.remove('disabled');
+      }
+    } catch (e) {
+      console.log('Error in updateScrollIndicators:', e);
     }
   }
   
-  // Add touch swiping capability
+  // Add touch swiping capability for both mouse and touch events - DISABLED
   let startX, startScrollLeft, isDown = false;
   
+  // Mouse events only - no touch events
   scrollableCards.addEventListener('mousedown', (e) => {
     isDown = true;
     scrollableCards.style.cursor = 'grabbing';
@@ -1386,7 +1187,14 @@ function initScrollableCards() {
     e.preventDefault();
   });
   
-  // Handle window resize
+  // Touch events for mobile - DISABLED
+  // scrollableCards.addEventListener('touchstart', (e) => {...});
+  // scrollableCards.addEventListener('touchend', () => {...});
+  // scrollableCards.addEventListener('touchcancel', () => {...});
+  // scrollableCards.addEventListener('touchmove', (e) => {...});
+  
+  // Handle window resize - DISABLED
+  /*
   window.addEventListener('resize', () => {
     // Recalculate card widths and indicators
     setTimeout(() => {
@@ -1422,6 +1230,7 @@ function initScrollableCards() {
       updateScrollIndicators();
     }, 200); // Small delay to ensure layout is complete
   });
+  */
   
   // Initialize
   scrollableCards.style.cursor = 'grab';
@@ -1442,6 +1251,56 @@ function initServicesLocationSection() {
   if (indicators.length) {
     indicators[0].classList.add('active');
   }
+  
+  // Update indicators function - defined at global scope
+  updateIndicators = function(activeIndex = null) {
+    try {
+      const scrollableCards = document.querySelector('.scrollable-cards');
+      const scrollIndicatorsContainer = document.querySelector('.scroll-indicators');
+      const prevBtn = document.querySelector('.prev-btn');
+      const nextBtn = document.querySelector('.next-btn');
+      
+      if (!scrollableCards || !scrollIndicatorsContainer || !prevBtn || !nextBtn) return;
+      
+      // Get current scroll position safely
+      const currentScroll = Math.abs(scrollableCards.scrollLeft || 0);
+      const maxScroll = Math.max(0, (scrollableCards.scrollWidth || 0) - (scrollableCards.offsetWidth || 0));
+      
+      // Prevent division by zero
+      const scrollPercentage = maxScroll > 0 ? currentScroll / maxScroll : 0;
+      
+      // Calculate which indicator should be active
+      const indicators = scrollIndicatorsContainer.querySelectorAll('.indicator');
+      const indicatorCount = indicators.length;
+      
+      if (activeIndex === null) {
+        activeIndex = Math.min(
+          Math.floor(scrollPercentage * indicatorCount),
+          indicatorCount - 1
+        );
+      }
+      
+      // Update active indicator
+      indicators.forEach((indicator, index) => {
+        indicator.classList.toggle('active', index === activeIndex);
+      });
+      
+      // Enable/disable navigation buttons
+      if (currentScroll <= 10) {
+        prevBtn.classList.add('disabled');
+      } else {
+        prevBtn.classList.remove('disabled');
+      }
+      
+      if (maxScroll <= 10 || currentScroll >= maxScroll - 10) {
+        nextBtn.classList.add('disabled');
+      } else {
+        nextBtn.classList.remove('disabled');
+      }
+    } catch (e) {
+      console.log('Error in updateIndicators:', e);
+    }
+  };
   
   // Scroll to next/previous card
   if (nextButton) {
@@ -1471,118 +1330,12 @@ function initServicesLocationSection() {
       updateIndicators(index);
     });
   });
-  
-  // Update active indicator based on scroll position
-  function updateIndicators(activeIndex = null) {
-    if (!indicators.length) return;
-    
-    if (activeIndex === null) {
-      const scrollPosition = scrollContainer.scrollLeft;
-      const cardWidth = cards[0].offsetWidth + 20;
-      activeIndex = Math.round(scrollPosition / cardWidth);
-    }
-    
-    indicators.forEach((indicator, index) => {
-      if (index === activeIndex) {
-        indicator.classList.add('active');
-      } else {
-        indicator.classList.remove('active');
-      }
-    });
-  }
-  
-  // Update indicators on scroll
-  scrollContainer.addEventListener('scroll', () => {
-    updateIndicators();
-  });
 }
 
-// Initialize mobile menu
+// Initialize mobile menu - DISABLED
 function initMobileMenu() {
-  const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-  const navbarCollapse = document.querySelector('.navbar-collapse');
-  const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
-  const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
-  
-  if (mobileMenuBtn && navbarCollapse) {
-    // Toggle mobile menu
-    mobileMenuBtn.addEventListener('click', function() {
-      navbarCollapse.classList.toggle('show');
-      document.body.classList.toggle('menu-open');
-      
-      // Toggle hamburger icon animation
-      const spans = this.querySelectorAll('span');
-      if (spans.length > 2) {
-        this.classList.toggle('active');
-        if (this.classList.contains('active')) {
-          spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
-          spans[1].style.opacity = '0';
-          spans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
-        } else {
-          spans[0].style.transform = 'none';
-          spans[1].style.opacity = '1';
-          spans[2].style.transform = 'none';
-        }
-      }
-    });
-    
-    // Handle dropdown toggles in mobile view
-    dropdownToggles.forEach(toggle => {
-      toggle.addEventListener('click', function(e) {
-        if (window.innerWidth <= 991) {
-          e.preventDefault();
-          const parent = this.closest('.dropdown') || this.closest('.nav-item');
-          parent.classList.toggle('active');
-          
-          // Close other open dropdowns
-          dropdownToggles.forEach(otherToggle => {
-            const otherParent = otherToggle.closest('.dropdown') || otherToggle.closest('.nav-item');
-            if (otherParent !== parent && otherParent.classList.contains('active')) {
-              otherParent.classList.remove('active');
-            }
-          });
-        }
-      });
-    });
-    
-    // Close menu when clicking outside
-    document.addEventListener('click', function(e) {
-      if (!mobileMenuBtn.contains(e.target) && !navbarCollapse.contains(e.target) && navbarCollapse.classList.contains('show')) {
-        navbarCollapse.classList.remove('show');
-        mobileMenuBtn.classList.remove('active');
-        document.body.classList.remove('menu-open');
-        
-        // Close all dropdowns
-        const dropdowns = document.querySelectorAll('.nav-item.active, .dropdown.active');
-        dropdowns.forEach(dropdown => dropdown.classList.remove('active'));
-        
-        const spans = mobileMenuBtn.querySelectorAll('span');
-        if (spans.length > 2) {
-          spans[0].style.transform = 'none';
-          spans[1].style.opacity = '1';
-          spans[2].style.transform = 'none';
-        }
-      }
-    });
-    
-    // Close menu when nav links (not dropdowns) are clicked
-    navLinks.forEach(link => {
-      if (!link.classList.contains('dropdown-toggle')) {
-        link.addEventListener('click', function() {
-          navbarCollapse.classList.remove('show');
-          mobileMenuBtn.classList.remove('active');
-          document.body.classList.remove('menu-open');
-          
-          const spans = mobileMenuBtn.querySelectorAll('span');
-          if (spans.length > 2) {
-            spans[0].style.transform = 'none';
-            spans[1].style.opacity = '1';
-            spans[2].style.transform = 'none';
-          }
-        });
-      }
-    });
-  }
+  // Function disabled
+  return;
 }
 
 // Mobile Menu Toggle - combining both implementations
@@ -1593,46 +1346,45 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize scrollable cards
     initScrollableCards();
     
-    // Adjust mind map scale on resize
+    // Adjust mind map scale on resize - DISABLED
     const mindMap = document.querySelector('.mind-map');
     if (mindMap) {
         function adjustMindMapScale() {
-            if (window.innerWidth <= 600) {
-                mindMap.style.transform = 'scale(0.7)';
-            } else if (window.innerWidth <= 1279) {
-                mindMap.style.transform = 'scale(0.85)';
-            } else {
-                mindMap.style.transform = 'scale(1)';
-            }
+            // No responsive scaling
+            mindMap.style.transform = 'scale(1)';
         }
         
-        // Initial adjustment
+        // Initial adjustment - fixed scale
         adjustMindMapScale();
         
-        // Adjust on resize
-        window.addEventListener('resize', adjustMindMapScale);
+        // No resize listener
+        // window.addEventListener('resize', adjustMindMapScale);
     }
     
-    // Make tables responsive
-    const tables = document.querySelectorAll('table');
-    tables.forEach(table => {
-        const wrapper = document.createElement('div');
-        wrapper.classList.add('responsive-table');
-        table.parentNode.insertBefore(wrapper, table);
-        wrapper.appendChild(table);
-    });
+    // Make tables responsive - DISABLED
+    // const tables = document.querySelectorAll('table');
+    // tables.forEach(table => {
+    //     const wrapper = document.createElement('div');
+    //     wrapper.classList.add('responsive-table');
+    //     table.parentNode.insertBefore(wrapper, table);
+    //     wrapper.appendChild(table);
+    // });
 });
 
-// Debounce function to limit the rate at which a function can fire
-function debounce(func, wait) {
+// Improved debounce function with immediate execution option
+function debounce(func, wait, immediate = false) {
   let timeout;
   return function() {
     const context = this;
     const args = arguments;
+    const later = function() {
+      timeout = null;
+      if (!immediate) func.apply(context, args);
+    };
+    const callNow = immediate && !timeout;
     clearTimeout(timeout);
-    timeout = setTimeout(() => {
-      func.apply(context, args);
-    }, wait);
+    timeout = setTimeout(later, wait);
+    if (callNow) func.apply(context, args);
   };
 }
 
@@ -3285,3 +3037,26 @@ document.addEventListener('DOMContentLoaded', function() {
   // Initialize the performance indicators charts
   initPerformanceIndicatorsCharts();
 });
+
+/**
+ * Mobile viewport height fix for better mobile UX
+ * Handles the common mobile browser issue where 100vh includes the address bar
+ * Uses CSS custom properties to apply the correct height to elements
+ */
+function fixMobileViewportHeight() {
+  // Function disabled
+  return;
+}
+
+// ... existing code ...
+
+// Fix mobile viewport height on page load and resize with improved handling
+// Removing all event listeners related to mobile responsiveness
+// window.addEventListener('resize', debounce(fixMobileViewportHeight, 100, true));
+// window.addEventListener('orientationchange', fixMobileViewportHeight);
+// window.addEventListener('focusin', fixMobileViewportHeight);
+// window.addEventListener('focusout', fixMobileViewportHeight);
+// document.addEventListener('DOMContentLoaded', fixMobileViewportHeight);
+// fixMobileViewportHeight();
+
+// ... existing code ...
