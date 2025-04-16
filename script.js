@@ -1907,7 +1907,7 @@ function initSalesAchievedChart() {
       labels: ['2022', '2023', '2024'],
       datasets: [{
         label: 'المبيعات المتحققة (مليار دينار)',
-        data: [47.5, 41.5, 36.8],
+        data: [36.8, 41.5, 47.5],
         backgroundColor: [
           'rgba(75, 192, 192, 0.8)',
           'rgba(255, 159, 64, 0.8)',
