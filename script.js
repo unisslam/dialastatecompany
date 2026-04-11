@@ -2561,38 +2561,32 @@ function initPerformanceIndicatorsCharts() {
     new Chart(treatedWaterCtx, {
       type: 'bar',
       data: {
-        labels: ['2024', '2023'],
+        labels: ['2023', '2024', '2025'],
         datasets: [{
           label: 'المياه الصناعية المعالجة م3/يوم',
-          data: [1000, 1000],
-          backgroundColor: [
-            'rgba(75, 192, 192, 0.8)',
-            'rgba(75, 192, 192, 0.8)'
-          ],
-          borderColor: [
-            'rgba(75, 192, 192, 1)',
-            'rgba(75, 192, 192, 1)'
-          ],
-          borderWidth: 1
+          data: [1000, 1000, 1000],
+          backgroundColor: 'rgba(75, 192, 192, 0.8)',
+          borderColor: 'rgba(75, 192, 192, 1)',
+          borderWidth: 1,
+          borderRadius: 5
         }]
       },
       options: {
         responsive: true,
+        maintainAspectRatio: false,
         scales: {
           y: {
             beginAtZero: true,
-            max: 1200
+            max: 1200,
+            ticks: { callback: v => v + ' م³' }
           }
         },
         plugins: {
-          legend: {
-            position: 'top',
-          },
-          title: {
-            display: true,
-            text: 'مقارنة نسبة المياه الصناعية المعالجة م3/يوم'
-          }
-        }
+          legend: { position: 'top' },
+          title: { display: true, text: 'مقارنة نسبة المياه الصناعية المعالجة (م³/يوم) 2023-2025' },
+          tooltip: { callbacks: { label: c => c.parsed.y + ' م³/يوم' } }
+        },
+        animation: { duration: 2000, easing: 'easeOutQuart' }
       }
     });
   }
@@ -3208,3 +3202,120 @@ function initEnglishKPICharts() {
 document.addEventListener('DOMContentLoaded', function() {
   initEnglishKPICharts();
 });
+
+// ================================================================
+//  الهيكل التنظيمي الجديد – Org Chart Interactive JS
+// ================================================================
+
+(function () {
+  'use strict';
+
+  var orgScale = 1;
+  var SCALE_STEP = 0.15;
+  var SCALE_MIN  = 0.3;
+  var SCALE_MAX  = 2.5;
+
+  function applyScale() {
+    var wrap = document.getElementById('orgScaleWrap');
+    if (wrap) wrap.style.transform = 'scale(' + orgScale + ')';
+  }
+
+  function initCollapsible() {
+    document.querySelectorAll('.new-org-section .collapsible').forEach(function(node) {
+      node.addEventListener('click', function() {
+        var parentLi = this.closest('.org-li');
+        var childList = parentLi ? parentLi.querySelector(':scope > .org-ul') : null;
+        if (!childList) return;
+        var isCollapsed = this.getAttribute('data-collapsed') === 'true';
+        if (isCollapsed) {
+          childList.classList.remove('collapsed');
+          this.setAttribute('data-collapsed', 'false');
+        } else {
+          childList.classList.add('collapsed');
+          this.setAttribute('data-collapsed', 'true');
+        }
+      });
+    });
+  }
+
+  function initZoomControls() {
+    var btnIn    = document.getElementById('orgZoomIn');
+    var btnOut   = document.getElementById('orgZoomOut');
+    var btnReset = document.getElementById('orgReset');
+
+    if (btnIn)    btnIn.addEventListener('click',    function() { orgScale = Math.min(orgScale + SCALE_STEP, SCALE_MAX); applyScale(); });
+    if (btnOut)   btnOut.addEventListener('click',   function() { orgScale = Math.max(orgScale - SCALE_STEP, SCALE_MIN); applyScale(); });
+    if (btnReset) btnReset.addEventListener('click', function() { orgScale = 1; applyScale(); });
+
+    var scrollWrap = document.getElementById('orgScrollWrap');
+    if (scrollWrap) {
+      scrollWrap.addEventListener('wheel', function(e) {
+        if (e.ctrlKey) {
+          e.preventDefault();
+          orgScale = e.deltaY < 0
+            ? Math.min(orgScale + SCALE_STEP, SCALE_MAX)
+            : Math.max(orgScale - SCALE_STEP, SCALE_MIN);
+          applyScale();
+        }
+      }, { passive: false });
+    }
+  }
+
+  function initExpandCollapseAll() {
+    var btnExpand   = document.getElementById('orgExpandAll');
+    var btnCollapse = document.getElementById('orgCollapseAll');
+
+    if (btnExpand) {
+      btnExpand.addEventListener('click', function() {
+        document.querySelectorAll('.new-org-section .org-ul').forEach(function(ul) { ul.classList.remove('collapsed'); });
+        document.querySelectorAll('.new-org-section .collapsible').forEach(function(n) { n.setAttribute('data-collapsed', 'false'); });
+      });
+    }
+
+    if (btnCollapse) {
+      btnCollapse.addEventListener('click', function() {
+        document.querySelectorAll('.new-org-section .org-children').forEach(function(ul) { ul.classList.add('collapsed'); });
+        document.querySelectorAll('.new-org-section .collapsible').forEach(function(n) { n.setAttribute('data-collapsed', 'true'); });
+      });
+    }
+  }
+
+  function initDragPan() {
+    var scrollWrap = document.getElementById('orgScrollWrap');
+    if (!scrollWrap) return;
+
+    var isDragging = false;
+    var startX, startY, scrollLeft, scrollTop;
+
+    scrollWrap.addEventListener('mousedown', function(e) {
+      isDragging = true;
+      startX     = e.pageX - scrollWrap.offsetLeft;
+      startY     = e.pageY - scrollWrap.offsetTop;
+      scrollLeft = scrollWrap.scrollLeft;
+      scrollTop  = scrollWrap.scrollTop;
+    });
+
+    document.addEventListener('mouseup',   function() { isDragging = false; });
+    document.addEventListener('mousemove', function(e) {
+      if (!isDragging) return;
+      e.preventDefault();
+      var x = e.pageX - scrollWrap.offsetLeft;
+      var y = e.pageY - scrollWrap.offsetTop;
+      scrollWrap.scrollLeft = scrollLeft - (x - startX);
+      scrollWrap.scrollTop  = scrollTop  - (y - startY);
+    });
+  }
+
+  function bootOrgChart() {
+    initCollapsible();
+    initZoomControls();
+    initExpandCollapseAll();
+    initDragPan();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bootOrgChart);
+  } else {
+    bootOrgChart();
+  }
+})();
