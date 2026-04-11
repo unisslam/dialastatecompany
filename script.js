@@ -1623,10 +1623,10 @@ function initProductPriceChart() {
   new Chart(ctx, {
     type: 'bar',
     data: {
-      labels: ['2022', '2023', '2024'],
+      labels: ['2023', '2024', '2025'],
       datasets: [
         {
-          label: 'مناسب',
+          label: 'معتدل / مناسب',
           data: [75, 57, 100],
           backgroundColor: 'rgba(34, 139, 34, 0.7)',
           borderColor: 'rgba(34, 139, 34, 1)',
@@ -1694,12 +1694,12 @@ function initDefectiveTransformersChart() {
   if (!ctx) return;
   
   new Chart(ctx, {
-    type: 'line',
+    type: 'bar',
     data: {
-      labels: ['2022', '2023', '2024'],
+      labels: ['2023', '2024', '2025'],
       datasets: [{
-        label: 'نسبة المحولات العاطلة',
-        data: [0.01, 0.01, 0.02],
+        label: 'نسبة المحولات العاطلة من إجمالي المبيعات',
+        data: [0.02, 0.01, 0.02],
         fill: false,
         backgroundColor: 'rgba(255, 99, 132, 0.2)',
         borderColor: 'rgba(255, 99, 132, 1)',
@@ -1823,10 +1823,10 @@ function initNoncomplianceCasesChart() {
   new Chart(ctx, {
     type: 'bar',
     data: {
-      labels: ['2022', '2023', '2024'],
+      labels: ['2023', '2024', '2025'],
       datasets: [{
-        label: 'نسبة حالات عدم المطابقة التي تم تجاوزها',
-        data: [0.7, 0.7, 0],
+        label: 'نسبة حالات عدم المطابقة',
+        data: [0.7, 0, 0.7],
         backgroundColor: [
           'rgba(255, 159, 64, 0.8)',
           'rgba(54, 162, 235, 0.8)',
@@ -1888,11 +1888,11 @@ function initFinancialOutputsChart() {
   new Chart(ctx, {
     type: 'bar',
     data: {
-      labels: ['2022', '2023', '2024'],
+      labels: ['2023', '2024', '2025'],
       datasets: [
         {
-          label: 'التكاليف',
-          data: [64318, 120153, 129753],
+          label: 'التكاليف (مليون دينار)',
+          data: [64316, 71123, 82700],
           backgroundColor: 'rgba(255, 99, 132, 0.7)',
           borderColor: 'rgba(255, 99, 132, 1)',
           borderWidth: 1,
@@ -1900,28 +1900,13 @@ function initFinancialOutputsChart() {
           order: 2
         },
         {
-          label: 'العوائد',
-          data: [57053, 131625, 141814],
-          backgroundColor: 'rgba(54, 162, 235, 0.7)',
-          borderColor: 'rgba(54, 162, 235, 1)',
+          label: 'الإيرادات (مليون دينار)',
+          data: [57051, 84983, 78400],
+          backgroundColor: 'rgba(34, 139, 34, 0.7)',
+          borderColor: 'rgba(34, 139, 34, 1)',
           borderWidth: 1,
           borderRadius: 5,
           order: 1
-        },
-        {
-          label: 'المبيعات (مليار دينار)',
-          data: [47.5, 41.5, 36.8],
-          type: 'line',
-          borderColor: 'rgba(75, 192, 192, 1)',
-          backgroundColor: 'rgba(75, 192, 192, 0.2)',
-          borderWidth: 3,
-          pointBackgroundColor: '#fff',
-          pointBorderColor: 'rgba(75, 192, 192, 1)',
-          pointBorderWidth: 2,
-          pointRadius: 5,
-          fill: false,
-          tension: 0.3,
-          order: 0
         }
       ]
     },
@@ -1974,10 +1959,10 @@ function initSalesAchievedChart() {
   new Chart(ctx, {
     type: 'bar',
     data: {
-      labels: ['2022', '2023', '2024'],
+      labels: ['2023', '2024', '2025'],
       datasets: [{
         label: 'المبيعات المتحققة (مليار دينار)',
-        data: [36.8, 41.5, 47.5],
+        data: [41.5, 48, 74],
         backgroundColor: [
           'rgba(75, 192, 192, 0.8)',
           'rgba(255, 159, 64, 0.8)',
@@ -2040,17 +2025,17 @@ function initJobSatisfactionChart() {
   const labels = [
     'التواصل',
     'الولاء والانتماء الوظيفي',
+    'السلوك الوظيفي',
+    'الاستحقاق الوظيفي',
     'التمكين',
-    'السلوك الترقيعي',
-    'الاستقلال الوظيفي',
-    'الجانب المعنوي',
-    'التطوير والتنمية',
+    'التحفيز والدافعية',
     'الصحة والسلامة المهنية',
+    'الجانب المعنوي',
     'التخطيط الاستراتيجي',
     'القيادة'
   ];
   
-  const data = [83, 82, 80, 80, 79, 79, 79, 78, 75, 75];
+  const data = [86, 86, 82, 82, 81, 81, 81, 79, 76, 75];
   
   // Define colors based on value ranges
   const getColor = (value) => {
@@ -2125,10 +2110,10 @@ function initJobSatisfactionComparisonChart() {
   new Chart(ctx, {
     type: 'bar',
     data: {
-      labels: ['2023', '2024'],
+      labels: ['2023', '2024', '2025'],
       datasets: [{
         label: 'معدل الرضا الوظيفي',
-        data: [80.8, 79],
+        data: [80, 79, 81],
         backgroundColor: [
           'rgba(34, 139, 34, 0.8)',
           'rgba(255, 159, 64, 0.8)'
@@ -2618,40 +2603,35 @@ function initPerformanceIndicatorsCharts() {
     new Chart(plantPurchaseCtx, {
       type: 'bar',
       data: {
-        labels: ['2024', '2023', '2022'],
+        labels: ['2023', '2024', '2025'],
         datasets: [{
           label: 'عدد الشتلات',
-          data: [300, 200, 100],
+          data: [200, 300, 350],
           backgroundColor: [
-            'rgba(255, 159, 64, 0.8)',
-            'rgba(255, 159, 64, 0.8)',
-            'rgba(255, 159, 64, 0.8)'
+            'rgba(34, 139, 34, 0.6)',
+            'rgba(34, 139, 34, 0.75)',
+            'rgba(34, 139, 34, 0.9)'
           ],
-          borderColor: [
-            'rgba(255, 159, 64, 1)',
-            'rgba(255, 159, 64, 1)',
-            'rgba(255, 159, 64, 1)'
-          ],
-          borderWidth: 1
+          borderColor: 'rgba(34, 139, 34, 1)',
+          borderWidth: 1,
+          borderRadius: 5
         }]
       },
       options: {
         responsive: true,
+        maintainAspectRatio: false,
         scales: {
           y: {
             beginAtZero: true,
-            max: 350
+            max: 400
           }
         },
         plugins: {
-          legend: {
-            position: 'top',
-          },
-          title: {
-            display: true,
-            text: 'مقارنة شراء الشتلات'
-          }
-        }
+          legend: { position: 'top' },
+          title: { display: true, text: 'مقارنة شراء الشتلات 2023-2025' },
+          tooltip: { callbacks: { label: c => c.parsed.y + ' شتلة' } }
+        },
+        animation: { duration: 2000, easing: 'easeOutQuart' }
       }
     });
   }
@@ -2662,38 +2642,32 @@ function initPerformanceIndicatorsCharts() {
     new Chart(periodicCheckupCtx, {
       type: 'bar',
       data: {
-        labels: ['2024', '2023'],
+        labels: ['2023', '2024', '2025'],
         datasets: [{
           label: 'عدد الفحوصات',
-          data: [242, 174],
+          data: [174, 242, 504],
           backgroundColor: [
-            'rgba(255, 99, 132, 0.8)',
-            'rgba(255, 99, 132, 0.8)'
+            'rgba(54, 162, 235, 0.7)',
+            'rgba(54, 162, 235, 0.85)',
+            'rgba(54, 162, 235, 1)'
           ],
-          borderColor: [
-            'rgba(255, 99, 132, 1)',
-            'rgba(255, 99, 132, 1)'
-          ],
-          borderWidth: 1
+          borderColor: 'rgba(54, 162, 235, 1)',
+          borderWidth: 1,
+          borderRadius: 5
         }]
       },
       options: {
         responsive: true,
+        maintainAspectRatio: false,
         scales: {
-          y: {
-            beginAtZero: true,
-            max: 300
-          }
+          y: { beginAtZero: true, max: 550 }
         },
         plugins: {
-          legend: {
-            position: 'top',
-          },
-          title: {
-            display: true,
-            text: 'الفحص الدوري للعاملين في الشركة'
-          }
-        }
+          legend: { position: 'top' },
+          title: { display: true, text: 'الفحص الدوري للعاملين في الشركة 2023-2025' },
+          tooltip: { callbacks: { label: c => c.parsed.y + ' حالة فحص' } }
+        },
+        animation: { duration: 2000, easing: 'easeOutQuart' }
       }
     });
   }
@@ -2744,38 +2718,28 @@ function initPerformanceIndicatorsCharts() {
     new Chart(foodBasketsCtx, {
       type: 'bar',
       data: {
-        labels: ['2024', '2023'],
+        labels: ['2023', '2024', '2025'],
         datasets: [{
           label: 'عدد السلات الغذائية',
-          data: [250, 250],
-          backgroundColor: [
-            'rgba(220, 53, 69, 0.8)',
-            'rgba(220, 53, 69, 0.8)'
-          ],
-          borderColor: [
-            'rgba(220, 53, 69, 1)',
-            'rgba(220, 53, 69, 1)'
-          ],
-          borderWidth: 1
+          data: [250, 250, 250],
+          backgroundColor: 'rgba(220, 53, 69, 0.75)',
+          borderColor: 'rgba(220, 53, 69, 1)',
+          borderWidth: 1,
+          borderRadius: 5
         }]
       },
       options: {
         responsive: true,
+        maintainAspectRatio: false,
         scales: {
-          y: {
-            beginAtZero: true,
-            max: 300
-          }
+          y: { beginAtZero: true, max: 300 }
         },
         plugins: {
-          legend: {
-            position: 'top',
-          },
-          title: {
-            display: true,
-            text: 'مقارنة السلات الغذائية'
-          }
-        }
+          legend: { position: 'top' },
+          title: { display: true, text: 'مقارنة السلات الغذائية 2023-2025' },
+          tooltip: { callbacks: { label: c => c.parsed.y + ' سلة' } }
+        },
+        animation: { duration: 2000, easing: 'easeOutQuart' }
       }
     });
   }
@@ -2826,38 +2790,37 @@ function initPerformanceIndicatorsCharts() {
   const maintenanceExpensesCtx = document.getElementById('maintenanceExpensesChart');
   if (maintenanceExpensesCtx) {
     new Chart(maintenanceExpensesCtx, {
-      type: 'pie',
+      type: 'bar',
       data: {
-        labels: ['صيانة 2023', 'صيانة 2024', 'أثاث 2023', 'أثاث 2024'],
-        datasets: [{
-          label: 'المبالغ (مليون دينار)',
-          data: [101, 107, 85, 179],
-          backgroundColor: [
-            'rgba(220, 53, 69, 0.7)',
-            'rgba(111, 66, 193, 0.7)',
-            'rgba(255, 193, 7, 0.7)',
-            'rgba(111, 45, 168, 0.7)'
-          ],
-          borderColor: [
-            'rgba(220, 53, 69, 1)',
-            'rgba(111, 66, 193, 1)',
-            'rgba(255, 193, 7, 1)',
-            'rgba(111, 45, 168, 1)'
-          ],
-          borderWidth: 1
-        }]
+        labels: ['2023', '2024', '2025'],
+        datasets: [
+          {
+            label: 'صيانة (مليون دينار)',
+            data: [101, 107, 100],
+            backgroundColor: 'rgba(54, 162, 235, 0.7)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 1,
+            borderRadius: 5
+          },
+          {
+            label: 'أثاث (مليون دينار)',
+            data: [85, 179, 125],
+            backgroundColor: 'rgba(255, 193, 7, 0.7)',
+            borderColor: 'rgba(255, 193, 7, 1)',
+            borderWidth: 1,
+            borderRadius: 5
+          }
+        ]
       },
       options: {
         responsive: true,
+        maintainAspectRatio: false,
+        scales: { y: { beginAtZero: true, max: 200 } },
         plugins: {
-          legend: {
-            position: 'top',
-          },
-          title: {
-            display: true,
-            text: 'المبالغ المصروفة للصيانة والأثاث (مليون دينار)'
-          }
-        }
+          legend: { position: 'top' },
+          title: { display: true, text: 'المبالغ المصروفة للصيانة والأثاث (مليون دينار)' }
+        },
+        animation: { duration: 2000, easing: 'easeOutQuart' }
       }
     });
   }
@@ -2868,40 +2831,30 @@ function initPerformanceIndicatorsCharts() {
     new Chart(financialAssistanceCtx, {
       type: 'bar',
       data: {
-        labels: ['2024', '2023', '2022'],
+        labels: ['2023', '2024', '2025'],
         datasets: [{
           label: 'المساعدات المالية (مليون دينار)',
-          data: [142, 144, 130],
+          data: [144, 142, 250],
           backgroundColor: [
-            'rgba(255, 159, 64, 0.8)',
-            'rgba(255, 159, 64, 0.8)',
-            'rgba(255, 159, 64, 0.8)'
-          ],
-          borderColor: [
-            'rgba(255, 159, 64, 1)',
-            'rgba(255, 159, 64, 1)',
+            'rgba(255, 159, 64, 0.7)',
+            'rgba(255, 159, 64, 0.85)',
             'rgba(255, 159, 64, 1)'
           ],
-          borderWidth: 1
+          borderColor: 'rgba(255, 159, 64, 1)',
+          borderWidth: 1,
+          borderRadius: 5
         }]
       },
       options: {
         responsive: true,
-        scales: {
-          y: {
-            beginAtZero: true,
-            max: 160
-          }
-        },
+        maintainAspectRatio: false,
+        scales: { y: { beginAtZero: true, max: 280 } },
         plugins: {
-          legend: {
-            position: 'top',
-          },
-          title: {
-            display: true,
-            text: 'المساعدات المالية للموظفين (مليون دينار)'
-          }
-        }
+          legend: { position: 'top' },
+          title: { display: true, text: 'المساعدات المالية للموظفين (مليون دينار)' },
+          tooltip: { callbacks: { label: c => c.parsed.y + ' مليون دينار' } }
+        },
+        animation: { duration: 2000, easing: 'easeOutQuart' }
       }
     });
   }
@@ -2912,41 +2865,35 @@ function initPerformanceIndicatorsCharts() {
     new Chart(awardsCtx, {
       type: 'bar',
       data: {
-        labels: ['2024', '2023', '2022'],
+        labels: ['2023', '2024', '2025'],
         datasets: [
           {
             label: 'الجوائز',
-            data: [3, 0, 0],
-            backgroundColor: 'rgba(40, 167, 69, 0.8)',
-            borderColor: 'rgba(40, 167, 69, 1)',
-            borderWidth: 1
+            data: [4, 6, 7],
+            backgroundColor: 'rgba(34, 139, 34, 0.8)',
+            borderColor: 'rgba(34, 139, 34, 1)',
+            borderWidth: 1,
+            borderRadius: 5
           },
           {
             label: 'كتب الشكر',
-            data: [16, 12, 10],
+            data: [12, 15, 16],
             backgroundColor: 'rgba(255, 193, 7, 0.8)',
             borderColor: 'rgba(255, 193, 7, 1)',
-            borderWidth: 1
+            borderWidth: 1,
+            borderRadius: 5
           }
         ]
       },
       options: {
         responsive: true,
-        scales: {
-          y: {
-            beginAtZero: true,
-            max: 18
-          }
-        },
+        maintainAspectRatio: false,
+        scales: { y: { beginAtZero: true, max: 20 } },
         plugins: {
-          legend: {
-            position: 'top',
-          },
-          title: {
-            display: true,
-            text: 'الجوائز وكتب الشكر والتقدير'
-          }
-        }
+          legend: { position: 'top' },
+          title: { display: true, text: 'الجوائز وكتب الشكر والتقدير 2023-2025' }
+        },
+        animation: { duration: 2000, easing: 'easeOutQuart' }
       }
     });
   }
@@ -2957,41 +2904,35 @@ function initPerformanceIndicatorsCharts() {
     new Chart(universityVisitsCtx, {
       type: 'bar',
       data: {
-        labels: ['كلية الرافدين', 'معهد', 'علوم', 'هندسة'],
+        labels: ['هندسة', 'علوم', 'المعهد التقني', 'جامعة بلاد الرافدين'],
         datasets: [
           {
             label: 'الزيارات',
-            data: [1, 15, 2, 2],
+            data: [3, 3, 16, 2],
             backgroundColor: 'rgba(0, 123, 255, 0.8)',
             borderColor: 'rgba(0, 123, 255, 1)',
-            borderWidth: 1
+            borderWidth: 1,
+            borderRadius: 5
           },
           {
             label: 'التدريب',
-            data: [0, 10, 6, 7],
+            data: [8, 8, 12, 0],
             backgroundColor: 'rgba(108, 117, 125, 0.8)',
             borderColor: 'rgba(108, 117, 125, 1)',
-            borderWidth: 1
+            borderWidth: 1,
+            borderRadius: 5
           }
         ]
       },
       options: {
         responsive: true,
-        scales: {
-          y: {
-            beginAtZero: true,
-            max: 16
-          }
-        },
+        maintainAspectRatio: false,
+        scales: { y: { beginAtZero: true, max: 18 } },
         plugins: {
-          legend: {
-            position: 'top',
-          },
-          title: {
-            display: true,
-            text: 'الزيارات والتدريب لطلبة الجامعات والمعاهد'
-          }
-        }
+          legend: { position: 'top' },
+          title: { display: true, text: 'الزيارات والتدريب لطلبة الجامعات والمعاهد' }
+        },
+        animation: { duration: 2000, easing: 'easeOutQuart' }
       }
     });
   }
@@ -3002,40 +2943,30 @@ function initPerformanceIndicatorsCharts() {
     new Chart(managerMeetingsCtx, {
       type: 'bar',
       data: {
-        labels: ['2024', '2023', '2022'],
+        labels: ['2023', '2024', '2025'],
         datasets: [{
           label: 'عدد المقابلات',
-          data: [130, 119, 110],
+          data: [119, 130, 140],
           backgroundColor: [
-            'rgba(220, 53, 69, 0.8)',
-            'rgba(220, 53, 69, 0.8)',
-            'rgba(220, 53, 69, 0.8)'
+            'rgba(34, 139, 34, 0.7)',
+            'rgba(34, 139, 34, 0.85)',
+            'rgba(34, 139, 34, 1)'
           ],
-          borderColor: [
-            'rgba(220, 53, 69, 1)',
-            'rgba(220, 53, 69, 1)',
-            'rgba(220, 53, 69, 1)'
-          ],
-          borderWidth: 1
+          borderColor: 'rgba(34, 139, 34, 1)',
+          borderWidth: 1,
+          borderRadius: 5
         }]
       },
       options: {
         responsive: true,
-        scales: {
-          y: {
-            beginAtZero: true,
-            max: 140
-          }
-        },
+        maintainAspectRatio: false,
+        scales: { y: { beginAtZero: false, min: 100, max: 160 } },
         plugins: {
-          legend: {
-            position: 'top',
-          },
-          title: {
-            display: true,
-            text: 'مقابلات السيد المدير العام مع الموظفين والمواطنين'
-          }
-        }
+          legend: { position: 'top' },
+          title: { display: true, text: 'مقابلات السيد المدير العام مع الموظفين 2023-2025' },
+          tooltip: { callbacks: { label: c => c.parsed.y + ' مقابلة' } }
+        },
+        animation: { duration: 2000, easing: 'easeOutQuart' }
       }
     });
   }
@@ -3130,3 +3061,150 @@ function fixMobileViewportHeight() {
 // fixMobileViewportHeight();
 
 // ... existing code ...
+
+// ============================================================
+// English Page KPI Charts Initialization
+// ============================================================
+function initEnglishKPICharts() {
+  const commonOpts = {
+    responsive: true,
+    maintainAspectRatio: false,
+    animation: { duration: 2000, easing: 'easeOutQuart' },
+    plugins: { legend: { position: 'top' } }
+  };
+
+  // 1. Stakeholder Satisfaction Chart (English)
+  const enStakeholderCtx = document.getElementById('enStakeholderChart');
+  if (enStakeholderCtx) {
+    new Chart(enStakeholderCtx, {
+      type: 'bar',
+      data: {
+        labels: ['Service Quality', 'Ease of Procedures', 'Institution Reputation', 'Participation', 'Company Opinion', 'Complaints'],
+        datasets: [{
+          label: 'Satisfaction (%)',
+          data: [64, 62, 62, 55, 52, 60],
+          backgroundColor: [
+            'rgba(34,139,34,0.8)', 'rgba(34,139,34,0.7)', 'rgba(34,139,34,0.6)',
+            'rgba(255,206,86,0.8)', 'rgba(255,206,86,0.7)', 'rgba(255,206,86,0.6)'
+          ],
+          borderRadius: 5
+        }]
+      },
+      options: {
+        ...commonOpts,
+        indexAxis: 'y',
+        scales: {
+          x: { beginAtZero: true, max: 100, ticks: { callback: v => v + '%' } },
+          y: { grid: { display: false } }
+        },
+        plugins: { ...commonOpts.plugins, legend: { display: false },
+          tooltip: { callbacks: { label: c => c.parsed.x + '%' } }
+        }
+      }
+    });
+  }
+
+  // 2. Sales Chart (English)
+  const enSalesCtx = document.getElementById('enSalesChart');
+  if (enSalesCtx) {
+    new Chart(enSalesCtx, {
+      type: 'bar',
+      data: {
+        labels: ['2023', '2024', '2025'],
+        datasets: [{
+          label: 'Sales (Billion IQD)',
+          data: [41.5, 48, 74],
+          backgroundColor: ['rgba(54,162,235,0.7)', 'rgba(54,162,235,0.85)', 'rgba(54,162,235,1)'],
+          borderColor: 'rgba(54,162,235,1)',
+          borderWidth: 1,
+          borderRadius: 8
+        }]
+      },
+      options: {
+        ...commonOpts,
+        scales: {
+          y: { beginAtZero: true, ticks: { callback: v => v + 'B' } },
+          x: { grid: { display: false } }
+        },
+        plugins: { ...commonOpts.plugins,
+          tooltip: { callbacks: { label: c => c.parsed.y + ' Billion IQD' } }
+        }
+      }
+    });
+  }
+
+  // 3. Job Satisfaction Chart (English)
+  const enJobSatCtx = document.getElementById('enJobSatChart');
+  if (enJobSatCtx) {
+    new Chart(enJobSatCtx, {
+      type: 'line',
+      data: {
+        labels: ['2023', '2024', '2025'],
+        datasets: [{
+          label: 'Job Satisfaction (%)',
+          data: [80, 79, 81],
+          borderColor: 'rgba(34,139,34,1)',
+          backgroundColor: 'rgba(34,139,34,0.1)',
+          borderWidth: 3,
+          fill: true,
+          tension: 0.4,
+          pointBackgroundColor: '#fff',
+          pointBorderColor: 'rgba(34,139,34,1)',
+          pointBorderWidth: 3,
+          pointRadius: 6
+        }]
+      },
+      options: {
+        ...commonOpts,
+        scales: {
+          y: { beginAtZero: false, min: 75, max: 85, ticks: { callback: v => v + '%' } },
+          x: { grid: { display: false } }
+        },
+        plugins: { ...commonOpts.plugins,
+          tooltip: { callbacks: { label: c => c.parsed.y + '%' } }
+        }
+      }
+    });
+  }
+
+  // 4. Awards & Thank-you Letters Chart (English)
+  const enAwardsCtx = document.getElementById('enAwardsChart');
+  if (enAwardsCtx) {
+    new Chart(enAwardsCtx, {
+      type: 'bar',
+      data: {
+        labels: ['2023', '2024', '2025'],
+        datasets: [
+          {
+            label: 'Awards',
+            data: [4, 6, 7],
+            backgroundColor: 'rgba(34,139,34,0.8)',
+            borderColor: 'rgba(34,139,34,1)',
+            borderWidth: 1,
+            borderRadius: 5
+          },
+          {
+            label: 'Thank-you Letters',
+            data: [12, 15, 16],
+            backgroundColor: 'rgba(255,193,7,0.8)',
+            borderColor: 'rgba(255,193,7,1)',
+            borderWidth: 1,
+            borderRadius: 5
+          }
+        ]
+      },
+      options: {
+        ...commonOpts,
+        scales: {
+          y: { beginAtZero: true, max: 20 },
+          x: { grid: { display: false } }
+        }
+      }
+    });
+  }
+}
+
+// Initialize English KPI Charts on DOMContentLoaded
+document.addEventListener('DOMContentLoaded', function() {
+  initEnglishKPICharts();
+});
