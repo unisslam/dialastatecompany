@@ -485,7 +485,7 @@ function initQualificationsChart() {
     'يقرأ ويكتب'
   ];
   
-  const values = [13, 6, 306, 193, 1017, 57, 243, 12];
+  const values = [17, 5, 294, 186, 923, 48, 197, 15];
   
   // Create colors array
   const colors = [
@@ -498,6 +498,28 @@ function initQualificationsChart() {
     'rgba(255, 120, 0, 0.8)',    // Dark orange for primary
     'rgba(255, 80, 0, 0.8)'      // Reddish for basic literacy
   ];
+
+  const drawValuesPlugin = {
+    id: 'drawValues',
+    afterDatasetsDraw(chart) {
+      if (chart.config.type !== 'doughnut' && chart.config.type !== 'pie') return;
+      const { ctx, data } = chart;
+      ctx.save();
+      ctx.font = 'bold 12px "Cairo", "Tajawal", sans-serif';
+      ctx.fillStyle = '#fff';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+
+      chart.getDatasetMeta(0).data.forEach((arc, index) => {
+        const value = data.datasets[0].data[index];
+        if (value > 20) { // Only draw if arc is big enough
+          const centerPoint = arc.tooltipPosition();
+          ctx.fillText(value, centerPoint.x, centerPoint.y);
+        }
+      });
+      ctx.restore();
+    }
+  };
   
   // Create the doughnut chart
   new Chart(ctx, {
@@ -512,13 +534,14 @@ function initQualificationsChart() {
         hoverOffset: 15
       }]
     },
+    plugins: [drawValuesPlugin],
     options: {
       responsive: true,
       maintainAspectRatio: false,
       plugins: {
         title: {
           display: true,
-          text: 'توزيع القوى العاملة حسب المؤهلات - المجموع: 1847',
+          text: 'توزيع القوى العاملة حسب المؤهلات - المجموع: 1685',
           font: {
             size: 16,
             weight: 'bold'
@@ -539,7 +562,7 @@ function initQualificationsChart() {
           callbacks: {
             label: function(context) {
               const value = context.raw;
-              const percentage = (value / 1847 * 100).toFixed(1);
+              const percentage = (value / 1685 * 100).toFixed(1);
               return `${context.label}: ${value} (${percentage}%)`;
             }
           }
@@ -561,7 +584,7 @@ function initAgeGroupsChart() {
   
   // Age groups data
   const labels = ['21-30', '31-40', '41-50', '51-60', 'أكثر من 60'];
-  const values = [35, 123, 677, 972, 40];
+  const values = [24, 112, 586, 925, 38];
   const backgroundColors = [
     'rgba(0, 176, 255, 0.8)',    // Bright blue for youngest
     'rgba(34, 139, 34, 0.8)',     // Green for young
@@ -569,6 +592,28 @@ function initAgeGroupsChart() {
     'rgba(255, 140, 0, 0.8)',     // Orange for older
     'rgba(220, 53, 69, 0.8)'      // Red for oldest
   ];
+
+  const drawValuesPlugin = {
+    id: 'drawValues',
+    afterDatasetsDraw(chart) {
+      if (chart.config.type !== 'doughnut' && chart.config.type !== 'pie') return;
+      const { ctx, data } = chart;
+      ctx.save();
+      ctx.font = 'bold 12px "Cairo", "Tajawal", sans-serif';
+      ctx.fillStyle = '#fff';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+
+      chart.getDatasetMeta(0).data.forEach((arc, index) => {
+        const value = data.datasets[0].data[index];
+        if (value > 20) { // Only draw if arc is big enough
+          const centerPoint = arc.tooltipPosition();
+          ctx.fillText(value, centerPoint.x, centerPoint.y);
+        }
+      });
+      ctx.restore();
+    }
+  };
   
   // Create the pie chart
   new Chart(ctx, {
@@ -583,13 +628,14 @@ function initAgeGroupsChart() {
         hoverOffset: 15
       }]
     },
+    plugins: [drawValuesPlugin],
     options: {
       responsive: true,
       maintainAspectRatio: false,
       plugins: {
         title: {
           display: true,
-          text: 'توزيع القوى العاملة حسب الفئات العمرية - المجموع: 1847',
+          text: 'توزيع القوى العاملة حسب الفئات العمرية - المجموع: 1685',
           font: {
             size: 16,
             weight: 'bold'
@@ -610,7 +656,7 @@ function initAgeGroupsChart() {
           callbacks: {
             label: function(context) {
               const value = context.raw;
-              const percentage = (value / 1847 * 100).toFixed(1);
+              const percentage = (value / 1685 * 100).toFixed(1);
               return `${context.label}: ${value} (${percentage}%)`;
             }
           }
@@ -632,14 +678,14 @@ function initQualificationsByAgeChart() {
   
   // Data from the table
   const qualificationsData = [
-    {qualification: 'ماجستير', ages: [0, 2, 8, 3, 0]},
-    {qualification: 'دبلوم عالي', ages: [0, 0, 6, 0, 0]},
-    {qualification: 'بكالوريوس', ages: [16, 55, 122, 109, 4]},
-    {qualification: 'دبلوم فني', ages: [6, 19, 64, 99, 5]},
-    {qualification: 'اعدادية', ages: [7, 17, 377, 601, 15]},
-    {qualification: 'متوسطة', ages: [1, 4, 12, 37, 3]},
-    {qualification: 'ابتدائية', ages: [5, 24, 80, 121, 13]},
-    {qualification: 'يقرأ ويكتب', ages: [0, 2, 8, 2, 0]}
+    {qualification: 'ماجستير', ages: [0, 1, 11, 5, 0]},
+    {qualification: 'دبلوم عالي', ages: [0, 0, 5, 0, 0]},
+    {qualification: 'بكالوريوس', ages: [10, 60, 112, 107, 5]},
+    {qualification: 'دبلوم فني', ages: [4, 14, 59, 104, 5]},
+    {qualification: 'اعدادية', ages: [3, 12, 315, 577, 16]},
+    {qualification: 'متوسطة', ages: [1, 3, 10, 33, 1]},
+    {qualification: 'ابتدائية', ages: [6, 19, 65, 96, 11]},
+    {qualification: 'يقرأ ويكتب', ages: [0, 3, 9, 3, 0]}
   ];
   
   // Age group labels
