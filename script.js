@@ -304,28 +304,122 @@ function initCharts() {
     new Chart(salesChartCtx, {
       type: 'bar',
       data: {
-        labels: ['2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023'],
+        labels: ['2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025'],
         datasets: [{
           label: 'المبيعات (مليون دينار)',
-          data: [25, 32, 28, 36, 44, 48, 52, 55, 58, 62],
+          data: [25, 32, 28, 36, 44, 48, 52, 55, 58, 62, 48, 74],
           backgroundColor: 'rgba(75, 192, 192, 0.6)',
           borderColor: 'rgba(75, 192, 192, 1)',
           borderWidth: 1
         }]
       },
+      plugins: [ChartDataLabels],
       options: {
-        responsive: false,
-        maintainAspectRatio: true,
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          datalabels: {
+            anchor: 'end',
+            align: 'top',
+            color: '#228B22',
+            font: {
+              weight: 'bold'
+            }
+          }
+        },
         scales: {
           y: {
-            beginAtZero: true
+            beginAtZero: true,
+            grace: '10%' // Add extra space at the top for labels
           }
         }
       }
     });
   }
   
-  // Initialize other charts with similar non-responsive options
+  // Initialize production chart
+  const productionCtx = document.getElementById('productionChart')?.getContext('2d');
+  if (productionCtx) {
+    new Chart(productionCtx, {
+      type: 'line',
+      data: {
+        labels: ['2020', '2021', '2022', '2023', '2024', '2025'],
+        datasets: [{
+          label: 'الإنتاج السنوي',
+          data: [150, 165, 180, 210, 240, 260],
+          backgroundColor: 'rgba(54, 162, 235, 0.2)',
+          borderColor: 'rgba(54, 162, 235, 1)',
+          borderWidth: 2,
+          fill: true,
+          tension: 0.4
+        }]
+      },
+      plugins: [ChartDataLabels],
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          datalabels: {
+            anchor: 'end',
+            align: 'top',
+            color: '#36A2EB',
+            font: {
+              weight: 'bold'
+            }
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            grace: '10%'
+          }
+        }
+      }
+    });
+  }
+
+  // Initialize customer chart
+  const customerCtx = document.getElementById('customerChart')?.getContext('2d');
+  if (customerCtx) {
+    new Chart(customerCtx, {
+      type: 'doughnut',
+      data: {
+        labels: ['القطاع الحكومي', 'القطاع الخاص', 'القطاع المختلط'],
+        datasets: [{
+          label: 'توزيع العملاء',
+          data: [65, 25, 10],
+          backgroundColor: [
+            'rgba(75, 192, 192, 0.6)',
+            'rgba(255, 99, 132, 0.6)',
+            'rgba(255, 206, 86, 0.6)'
+          ],
+          borderColor: [
+            'rgba(75, 192, 192, 1)',
+            'rgba(255, 99, 132, 1)',
+            'rgba(255, 206, 86, 1)'
+          ],
+          borderWidth: 1
+        }]
+      },
+      plugins: [ChartDataLabels],
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          datalabels: {
+            color: '#000000',
+            font: {
+              weight: 'bold',
+              size: 14
+            },
+            formatter: (value) => {
+              return value + '%';
+            }
+          }
+        }
+      }
+    });
+  }
 }
 
 // Initialize employee grades chart

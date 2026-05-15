@@ -13,6 +13,7 @@
   <title>شركة ديالى العامة -نتائج التقييم المؤسسي</title>
   <link rel="stylesheet" href="style.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -716,15 +717,21 @@
       <div class="chart-grid">
         <div class="chart-container active" id="sales-container">
           <h3>مبيعات الشركة (بالمليار دينار)</h3>
-          <canvas id="salesChart"></canvas>
+          <div class="chart-wrapper" style="height: 300px; position: relative;">
+            <canvas id="salesChart"></canvas>
+          </div>
         </div>
         <div class="chart-container" id="production-container">
           <h3>الإنتاج السنوي</h3>
-          <canvas id="productionChart"></canvas>
+          <div class="chart-wrapper" style="height: 300px; position: relative;">
+            <canvas id="productionChart"></canvas>
+          </div>
         </div>
         <div class="chart-container" id="customers-container">
           <h3>توزيع العملاء</h3>
-          <canvas id="customerChart"></canvas>
+          <div class="chart-wrapper" style="height: 300px; position: relative;">
+            <canvas id="customerChart"></canvas>
+          </div>
         </div>
       </div>
     </section>
