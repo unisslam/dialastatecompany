@@ -347,7 +347,7 @@ function initEmployeeGradesChart() {
     'الدرجة العاشرة'
   ];
   
-  const values = [2, 182, 949, 193, 312, 65, 50, 26, 2, 2];
+  const values = [58, 134, 928, 155, 280, 57, 47, 23, 2, 1];
   
   // Create a color array that gradually changes from primary to secondary color
   const colorBase = [
@@ -362,6 +362,25 @@ function initEmployeeGradesChart() {
     'rgba(245, 209, 34, 0.5)',
     'rgba(255, 215, 0, 0.45)'  // Secondary color for lowest values
   ];
+
+  // Plugin to draw numbers on top of bars
+  const drawValuesPlugin = {
+    id: 'drawValues',
+    afterDatasetsDraw(chart) {
+      const { ctx, data } = chart;
+      ctx.save();
+      ctx.font = 'bold 14px "Cairo", "Tajawal", sans-serif';
+      ctx.fillStyle = '#333';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'bottom';
+
+      chart.getDatasetMeta(0).data.forEach((bar, index) => {
+        const value = data.datasets[0].data[index];
+        ctx.fillText(value, bar.x, bar.y - 5);
+      });
+      ctx.restore();
+    }
+  };
   
   // Create chart
   new Chart(ctx, {
@@ -378,9 +397,15 @@ function initEmployeeGradesChart() {
         barPercentage: 0.7
       }]
     },
+    plugins: [drawValuesPlugin],
     options: {
       responsive: true,
       maintainAspectRatio: false,
+      layout: {
+        padding: {
+          top: 30
+        }
+      },
       plugins: {
         title: {
           display: true,
